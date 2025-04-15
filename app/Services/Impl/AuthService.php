@@ -7,12 +7,11 @@ use App\Mappers\UserDataMapper;
 use App\Models\User;
 use App\Repositories\Contracts\IUserRepository;
 use App\Services\Contracts\IAuthService;
-use App\Services\Contracts\IUserService;
 use App\Session\UserSession;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-class UserService implements IUserService
+class AuthService implements IAuthService
 {
     private IUserRepository $repository;
     private UserDataMapper $userDataMapper;
@@ -26,31 +25,28 @@ class UserService implements IUserService
         $this->userDataMapper = $userDataMapper;
         $this->userSession = $userSession;
     }
+    public function register(UserRequest $request): ?User {
+        $user = $this->repository->getByEmail($request->get('email'));
+        if($user) {
+            return null;
+        }
+        $data = $this->userDataMapper->mapForCreate($request);
+        return $this->repository->store($data);
+    }
 
-    public function show(int $perPage): ?LengthAwarePaginator
+    public function login(LoginRequest $request): ?User
     {
-        if($this->userSession->isAdmin()){
-            return $this->repository->show($perPage);
+        $user = $this->repository->getByEmail($request->get('email'));
+
+        if($user && $user->password == $request->get('password')) {
+            $this->userSession->setUser($user);
+            return $user;
         }
         return null;
     }
 
-    public function findById(string $id): ?User {
-        return $this->repository->getById($id);
-    }
-
-    public function update(string $id, UserRequest $request): ?User {
-        if(!$this->userSession->isUserUsing($id)){
-            return null;
-        }
-        $data = $this->userDataMapper->mapForEdit($request);
-        return $this->repository->update($data, $id);
-    }
-
-    public function delete(string $id, Request  $request): ?User {
-        if(!$this->userSession->isUserUsing($id)){
-            return null;
-        }
-        return $this->repository->delete($id);
+    public function logout(): void
+    {
+        $this->userSession->flush();
     }
 }

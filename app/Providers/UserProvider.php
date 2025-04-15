@@ -2,10 +2,10 @@
 
 namespace App\Providers;
 
+use App\Repositories\Contracts\IUserRepository;
 use App\Repositories\Impl\UserRepository;
-use App\Repositories\IUserRepository;
-use App\Services\Impl\UserService;
-use App\Services\IUserService;
+use App\Services\Contracts\IAuthService;
+use App\Services\Impl\AuthService;
 use Illuminate\Support\ServiceProvider;
 
 class UserProvider extends ServiceProvider
@@ -17,7 +17,7 @@ class UserProvider extends ServiceProvider
     {
         //
         $this->app->bind(IUserRepository::class, UserRepository::class);
-        $this->app->bind(IUserService::class, UserService::class);
+        $this->app->bind(IAuthService::class, AuthService::class);
     }
 
     /**

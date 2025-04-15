@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\UserRequest;
-use App\Services\Impl\UserService;
+use App\Services\Impl\AuthService;
 
 class AuthController extends Controller
 {
-    private UserService $userService;
+    private AuthService $userService;
     //
-    public function __construct(UserService $userService){
+    public function __construct(AuthService $userService){
         $this->userService = $userService;
     }
 

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PostController;
 use App\Http\Middleware\CheckLogin;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BlogController;
@@ -18,4 +19,8 @@ Route::middleware([CheckLogin::class])->group(function () {
     Route::get('/', [AuthController::class,'index']);
     Route::get('logout', [AuthController::class,'logout'])->name('logout');
     Route::get('/{id}', [AuthController::class,'signin']);
+
+    Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
+    Route::post('/posts/store', [PostController::class, 'store'])->name('posts.store');
+    Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
 });

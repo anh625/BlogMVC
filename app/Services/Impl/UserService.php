@@ -18,7 +18,7 @@ class UserService implements IUserService
     }
 
     public function show(int $perPage): ?User{
-        if(session()->has('user') && session('user')->isAdmin()){
+        if(session()->has('user') && session('user')->role == 'admin'){
             return $this->repository->show($perPage);
         }
         return null;
@@ -80,7 +80,6 @@ class UserService implements IUserService
             'phone_number' => $request->get('phone_number'),
         ];
         $data['user_id'] = Str::uuid();
-        $data['is_admin'] = false;
         return $data;
     }
 

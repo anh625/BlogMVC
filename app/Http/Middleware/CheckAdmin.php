@@ -7,7 +7,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class CheckLogin
+class CheckAdmin
 {
     public function __construct(private readonly UserSession $userSession)
     {
@@ -19,10 +19,9 @@ class CheckLogin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!$this->userSession->getUser()) {
-            return redirect('/log-in')->withErrors(['error' => 'Vui lòng đăng nhập để tiếp tục!']);
+        if (!$this->userSession->isAdmin()) {
+            return redirect('/log-in')->withErrors(['error' => 'Bạn cần đăng nhập với quyền Admin để tiếp tục!']);;
         }
-
         return $next($request);
     }
 }

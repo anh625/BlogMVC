@@ -17,7 +17,7 @@ class UserSession extends SessionManager{
         return session('user');
     }
 
-    public static function setUser($user)
+    public static function setUser($user): void
     {
         session(['user' => $user]);
     }

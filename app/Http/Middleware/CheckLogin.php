@@ -7,9 +7,9 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class CheckLogin
+readonly class CheckLogin
 {
-    public function __construct(private readonly UserSession $userSession)
+    public function __construct(private UserSession $userSession)
     {
     }
     /**

@@ -4,31 +4,38 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\UserRequest;
-use App\Services\Impl\AuthService;
+use App\Services\Contracts\IAuthService;
+use App\Session\UserSession;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
 
 class AuthController extends Controller
 {
-    private AuthService $userService;
+    private IAuthService $userService;
+    private UserSession $userSession;
     //
-    public function __construct(AuthService $userService){
+    public function __construct(IAuthService $userService, UserSession $userSession){
         $this->userService = $userService;
+        $this->userSession = $userSession;
     }
 
-    public function index()
+    public function index(): View|Application|Factory
     {
         return view('welcome');
     }
 
     public function signin()
     {
-
         if(session()->has('user')){
             return redirect('/');
         }
         return view('auth.signin');
     }
 
-    public function login(LoginRequest $request){
+    public function login(LoginRequest $request): RedirectResponse
+    {
         if($this->userService->login($request)){
             return redirect('/');
         };
@@ -40,23 +47,25 @@ class AuthController extends Controller
     public function signup()
     {
         if(session()->has('user')){
-            return redirect('/');
+            return redirect()->route('/');
         }
         return view('auth.signup');
     }
 
-    public function register(UserRequest $request){
+    public function register(UserRequest $request)
+    {
         $user = $this->userService->register($request);
         if($user){
-            session(['user' => $user]);
-            return redirect('/');
+            $this->userSession->flash('success','Đăng ký thành công');
+            return redirect('/login');
         }
         return back()
             ->withErrors(['error' => 'Email đã tồn tại!'])
             ->withInput();
     }
 
-    public function logout(){
+    public function logout()
+    {
         $this->userService->logout();
         return redirect('/sign-in');
     }

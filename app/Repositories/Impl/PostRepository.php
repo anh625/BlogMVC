@@ -51,4 +51,20 @@ class PostRepository extends BaseRepository implements IPostRepository
                 ];
             });
     }
+
+    public function incrementView(int $id)
+    {
+        return Post::where($this->primaryKey, $id)
+            ->increment('view_counts', 1);
+    }
+
+    public function getPopularPosts(int|null $id = null){
+        $query = $this->model->orderBy('view_counts', 'desc');
+
+        if (!is_null($id)) {
+            $query->where($this->primaryKey, '!=', $id);
+        }
+
+        return $query->take(3)->get();
+    }
 }

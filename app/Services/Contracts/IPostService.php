@@ -24,4 +24,5 @@ interface IPostService
     public function edit(int $post_id, PostRequest $request ) : ?Post;
     public function destroy(int $post_id) : ?Post;
     public function getAllCategories() : ?Collection ;
+    public function getPopularPosts(int|null $id) ;
 }

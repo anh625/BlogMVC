@@ -39,6 +39,7 @@ class PostService implements IPostService
     public function showById(int $id) : ?array
     {
         $data['post'] = $this->postRepository->getById($id);
+        $this->postRepository->incrementView($id);
         return $data;
     }
     public function getById(int $id) : ?Post
@@ -94,5 +95,8 @@ class PostService implements IPostService
     public function getAllCategories() : ?Collection
     {
         return $this->postRepository->getCategoryWithPostCount();
+    }
+    public function getPopularPosts(int|null $id = null){
+        return $this->postRepository->getPopularPosts($id);
     }
 }

@@ -37,6 +37,7 @@ class PostController extends Controller
             $data['title'] = "'".$data['title']."'";
         }
         $data['categories'] = $this->postService->getAllCategories();
+        $data['popularPosts'] = $this->postService->getPopularPosts();
         return view('posts.show', compact('data'));
     }
 
@@ -53,6 +54,7 @@ class PostController extends Controller
             return redirect()->route('posts.show');
         }
         $data['categories'] = $this->postService->getAllCategories();
+        $data['popularPosts'] = $this->postService->getPopularPosts($post_id);
         return view('posts.showById', compact('data'));
     }
 

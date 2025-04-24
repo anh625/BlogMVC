@@ -17,7 +17,11 @@ return new class extends Migration
             $table->string('password',255);
             $table->string('name',255);
             $table->string('phone_number',13);
+<<<<<<< HEAD
             $table->string('user_image',255);
+=======
+            $table->string('user_image',255)->nullable();
+>>>>>>> anhnv
             $table->enum('role',['admin','user'])->default('user');
             $table->timestamps();
         });

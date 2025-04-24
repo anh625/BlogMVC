@@ -26,13 +26,12 @@
         </option>
     @endforeach
 </select>
-
-<div class="form-check mb-2">
-    <input type="checkbox" name="highlight_post" class="form-check-input" {{ old('highlight_post', $post->highlight_post ?? false) ? 'checked' : '' }}>
-    <label class="form-check-label">Bài viết nổi bật</label>
-</div>
-
-<div class="form-check mb-2">
-    <input type="checkbox" name="post_status" class="form-check-input" {{ old('post_status', $post->post_status ?? true) ? 'checked' : '' }}>
-    <label class="form-check-label">Hiển thị</label>
-</div>
+@php
+    use Illuminate\Support\Str;
+@endphp
+@if(Str::startsWith(request()->path(), 'posts/edit/'))
+    <div class="form-check mb-2">
+        <input type="checkbox" name="post_status" class="form-check-input" {{ old('post_status', $post->post_status ?? true) ? 'checked' : '' }}>
+        <label class="form-check-label">Hiển thị</label>
+    </div>
+@endif

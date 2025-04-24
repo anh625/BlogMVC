@@ -41,4 +41,9 @@ class CategoryRepository implements ICategoryRepository
         $category = $this->findById($id);
         return $category->delete();
     }
+    
+    public function getPostsForCategory($categoryId)
+    {
+        return $this->model->findOrFail($categoryId)->posts;
+    }
 }

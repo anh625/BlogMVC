@@ -9,8 +9,6 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-
-
     protected ICategoryService $categoryService;
 
     public function __construct(ICategoryService $categoryService)

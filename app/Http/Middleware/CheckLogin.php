@@ -22,7 +22,6 @@ readonly class CheckLogin
         if (!$this->userSession->getUser()) {
             return redirect('/log-in')->withErrors(['error' => 'Vui lòng đăng nhập để tiếp tục!']);
         }
-
         return $next($request);
     }
 }

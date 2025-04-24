@@ -30,6 +30,10 @@
                             <div style="color: red">
                                 {{ $errors->first() }}
                             </div>
+                        @elseif(Session::has('success'))
+                            <div style="color: green">
+                                {{ Session::get('success') }}
+                            </div>
                         @endif
 
                         <div class="text-center">

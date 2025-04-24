@@ -1,54 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Đăng bài viết</title>
-    <script src="{{ asset('tinymce/js/tinymce/tinymce.min.js') }}"></script>
+{{-- resources/views/posts/create.blade.php--}}
 
-    <script>
-        tinymce.init({
-            selector: '#content',
-            plugins: 'image code',
-            toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | image code',
-            height: 600,
-            automatic_uploads: true,
-            file_picker_types: 'image',
-            file_picker_callback: function (cb, value, meta) {
-                if (meta.filetype === 'image') {
-                    const input = document.createElement('input');
-                    input.setAttribute('type', 'file');
-                    input.setAttribute('accept', 'image/*');
-                    input.onchange = function () {
-                        const file = this.files[0];
-                        const reader = new FileReader();
-                        reader.onload = function () {
-                            const base64 = reader.result;
-                            cb(base64, { title: file.name });
-                        };
-                        reader.readAsDataURL(file);
-                    };
-                    input.click();
-                }
-            }
-        });
-    </script>
-</head>
-<body>
-<h1>Đăng bài viết mới</h1>
+@extends('layouts.app')
+@section('content')
 
-@if(session('success'))
-    <p style="color: green;">{{ session('success') }}</p>
-@endif
+    <div class="container">
+        <!-- Nội dung form ở đây -->
+        <div class="container">
+            <h2>Thêm bài viết mới</h2>
 
-<form action="{{ route('posts.store') }}" method="POST">
-    @csrf
-    <label>Tiêu đề:</label><br>
-    <input type="text" name="title" required style="width: 100%;"><br><br>
+            <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                @include('posts.form', ['post' => null])
+                <button type="submit" class="btn btn-success mt-2">Lưu</button>
+                <a href="{{ route('posts.show') }}" class="btn btn-secondary mt-2">Quay lại</a>
+            </form>
+        </div>
+        @if ($errors->any())
+            <div style="color: red">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+    </div>
+@endsection
 
-    <label>Nội dung:</label><br>
-    <textarea name="content" id="content"></textarea><br><br>
-
-    <button type="submit">Đăng bài</button>
-</form>
-</body>
-</html>

@@ -66,11 +66,9 @@
 </head>
 <body>
 @include('layouts.partials.header')
-<div class="section search-result-wrap">
-    <div class="container">
+
         @yield('content')
-    </div>
-</div>
+
 @include('layouts.partials.footer')
 @include('layouts.partials.preloader')
 <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>

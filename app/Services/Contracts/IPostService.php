@@ -15,9 +15,10 @@ use Illuminate\Support\Collection;
 interface IPostService
 {
     public function show() : LengthAwarePaginator;
+    public function showById(int $id) : ?array;
     public function searchByTitle(string $title) : ?array;
 
-    public function searchByUserId(string $user_id) : ?LengthAwarePaginator;
+    public function searchByUserId(string $user_id) : ?array;
     public function searchByCategoryId(int $category_id) : ?array;
     public function add(PostRequest $request) : ?Post;
     public function edit(int $post_id, PostRequest $request ) : ?Post;

@@ -29,6 +29,7 @@ Route::middleware(['user'])->group(function () {
     Route::put('/posts/update/{id}', [PostController::class, 'update'])->name('posts.update');
     Route::delete('/posts/destroy/{id}', [PostController::class, 'destroy'])->name('posts.destroy');
 });
+Route::get('/posts/{id}', [PostController::class, 'showById'])->name('posts.showById');
 
 //Route Categories
 Route::middleware(['admin'])->group(function () {

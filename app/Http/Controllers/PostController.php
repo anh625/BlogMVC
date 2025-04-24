@@ -36,7 +36,6 @@ class PostController extends Controller
         if (array_key_exists('title', $data)) {
             $data['title'] = "'".$data['title']."'";
         }
-
         $data['categories'] = $this->postService->getAllCategories();
         return view('posts.show', compact('data'));
     }
@@ -46,9 +45,15 @@ class PostController extends Controller
         $data['posts'] = $this->postService->show();
         return $this->renderPostsView($data);
     }
-    public function showById(string $post_id)
+    public function showById(int $post_id)
     {
-
+        $data = $this->postService->showById($post_id);
+        if ($data['post'] == null) {
+            $this->userSession->flash('error', 'Post not found');
+            return redirect()->route('posts.show');
+        }
+        $data['categories'] = $this->postService->getAllCategories();
+        return view('posts.showById', compact('data'));
     }
 
     public function showByUserId(string $user_id)

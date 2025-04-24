@@ -50,6 +50,5 @@ class PostRepository extends BaseRepository implements IPostRepository
                     'count_post' => $post->count_post,
                 ];
             });
-
     }
 }

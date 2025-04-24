@@ -5,6 +5,7 @@ use App\Http\Requests\PostRequest;
 use App\Mappers\PostDataMapper;
 use App\Models\Post;
 use App\Repositories\Contracts\IPostRepository;
+use App\Repositories\Contracts\IUserRepository;
 use App\Repositories\ICategoryRepository;
 use App\Services\Contracts\IPostService;
 use App\Session\UserSession;
@@ -15,22 +16,30 @@ class PostService implements IPostService
 {
     private IPostRepository $postRepository;
     private ICategoryRepository $categoryRepository;
+    private IUserRepository $userRepository;
     private PostDataMapper $postDataMapper;
     private UserSession $userSession;
 
     public function __construct(IPostRepository $postRepository,
                                 ICategoryRepository $categoryRepository,
+                                IUserRepository $userRepository,
                                 PostDataMapper $postDataMapper,
                                 UserSession $userSession)
     {
         $this->postRepository = $postRepository;
         $this->categoryRepository = $categoryRepository;
+        $this->userRepository = $userRepository;
         $this->postDataMapper = $postDataMapper;
         $this->userSession = $userSession;
     }
 
     public function show() : LengthAwarePaginator{
         return $this->postRepository->show();
+    }
+    public function showById(int $id) : ?array
+    {
+        $data['post'] = $this->postRepository->getById($id);
+        return $data;
     }
     public function getById(int $id) : ?Post
     {
@@ -42,7 +51,7 @@ class PostService implements IPostService
         return $data;
     }
 
-    public function searchByUserId(string $user_id) : ?LengthAwarePaginator
+    public function searchByUserId(string $user_id) : ?array
     {
         $data['posts'] = $this->postRepository->getByUserId($user_id);
         return $data;

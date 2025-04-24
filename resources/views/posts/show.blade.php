@@ -4,6 +4,8 @@
     @php
         use Illuminate\Support\Str;
     @endphp
+    <div class="section search-result-wrap">
+        <div class="container">
     @if(Str::startsWith(request()->path(), 'posts/category/'))
         <div class="row">
             <div class="col-12">
@@ -22,14 +24,14 @@
                     @if(is_object($data['posts']))
                         @foreach($data['posts'] as $p)
                             <div class="blog-entry d-flex blog-entry-search-item">
-                                <a href="#" class="img-link me-4">
+                                <a href="{{ asset(route('posts.showById', $p->post_id)) }}" class="img-link me-4">
                                     <img src="{{ asset('storage/' . $p->image) }}" alt="Image" class="img-fluid">
                                 </a>
                                 <div>
                                     <span class="date">{{ $p->updated_at->format('M. jS, Y') }} &bullet; <a href="{{ route('posts.showByCategoryId', $p->category_id) }}">{{ $p->category->category_name }}</a></span>
-                                    <h2><a href=" # ">{{ $p->title }}</a></h2>
+                                    <h2><a href="{{ asset(route('posts.showById', $p->post_id)) }}">{{ $p->title }}</a></h2>
                                     <p>{{ $p->description }}</p>
-                                    <p><a href="single.html" class="btn btn-sm btn-outline-primary">Read More</a></p>
+                                    <p><a href="{{ asset(route('posts.showById', $p->post_id)) }}" class="btn btn-sm btn-outline-primary">Read More</a></p>
                                 </div>
                             </div>
                         @endforeach
@@ -128,4 +130,6 @@
                     </div>
             </div>
         </div>
+        </div>
+    </div>
 @endsection

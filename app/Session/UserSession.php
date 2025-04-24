@@ -4,7 +4,7 @@ class UserSession extends SessionManager{
     public function isUserUsing(string $user_id): bool
     {
         $sessionUser = session('user');
-        return $sessionUser && $sessionUser->user_id == $user_id;
+        return $sessionUser && $sessionUser->getAttributes()['user_id'] == $user_id;
     }
 
     public function isAdmin(): bool{

@@ -4,6 +4,7 @@ namespace App\Repositories\Contracts;
 
 use App\Models\Post;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 /**
  * Interface IPostRepository
@@ -16,16 +17,30 @@ interface IPostRepository extends IBaseRepository
     /**
      * Get a paginated list of Posts.
      *
-     * @param int $perPage The number of Posts to display per page.
      * @return LengthAwarePaginator Paginated list of Posts.
      */
-    public function show(int $perPage): LengthAwarePaginator;
+    public function show(): LengthAwarePaginator;
 
     /**
-     * Get a single Post by their email address.
-     *
-     * @param string $email The email address of the Post.
-     * @return Post|null The Post object or null if not found.
+     * @param string $title
+     * @return Post|null
      */
-    public function getByEmail(string $email): ?Post;
+    public function getByTitle(string $title) : ?LengthAwarePaginator;
+
+    /**
+     * @param string $user_id
+     * @return Post|null
+     */
+    public function getByUserId(string $user_id) : ?LengthAwarePaginator;
+
+    /**
+     * @param int $category_id
+     * @return Post|null
+     */
+    public function getByCategoryId(int $category_id) : ?LengthAwarePaginator;
+
+    /**
+     * @return Collection|null
+     */
+    public function getCategoryWithPostCount(): ?Collection;
 }

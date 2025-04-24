@@ -16,10 +16,9 @@ interface IUserRepository extends IBaseRepository
     /**
      * Get a paginated list of Users.
      *
-     * @param int $perPage The number of Users to display per page.
      * @return LengthAwarePaginator Paginated list of Users.
      */
-    public function show(int $perPage): LengthAwarePaginator;
+    public function show(): LengthAwarePaginator;
 
     /**
      * Get a single User by their email address.

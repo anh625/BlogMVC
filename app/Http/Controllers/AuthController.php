@@ -28,9 +28,9 @@ class AuthController extends Controller
 
     public function signin()
     {
-        if(session()->has('user')){
-            return redirect('/');
-        }
+//        if(session()->has('user')){
+//            return redirect('/');
+//        }
         return view('auth.signin');
     }
 
@@ -46,9 +46,9 @@ class AuthController extends Controller
 
     public function signup()
     {
-        if(session()->has('user')){
-            return redirect()->route('/');
-        }
+//        if(session()->has('user')){
+//            return redirect()->route('/');
+//        }
         return view('auth.signup');
     }
 

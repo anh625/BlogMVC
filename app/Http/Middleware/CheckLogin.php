@@ -19,16 +19,9 @@ readonly class CheckLogin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $excludedPaths = ['/sign-in', '/sign-up', '/logout', 'post-sign-in', '/post-sign-up'];
-
-        if (in_array($request->path(), $excludedPaths)) {
-            return $next($request);
-        }
-
         if (!$this->userSession->getUser()) {
             return redirect('/log-in')->withErrors(['error' => 'Vui lòng đăng nhập để tiếp tục!']);
         }
-
         return $next($request);
     }
 }

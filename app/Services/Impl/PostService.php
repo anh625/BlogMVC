@@ -6,7 +6,7 @@ use App\Mappers\PostDataMapper;
 use App\Models\Post;
 use App\Repositories\Contracts\IPostRepository;
 use App\Repositories\Contracts\IUserRepository;
-use App\Repositories\ICategoryRepository;
+use App\Repositories\Contracts\ICategoryRepository;
 use App\Services\Contracts\IPostService;
 use App\Session\UserSession;
 use Illuminate\Support\Collection;
@@ -92,7 +92,6 @@ class PostService implements IPostService
             return null;
         }
         $data = $this->postDataMapper->mapForEdit($request);
-        //dd($data);
         return $this->postRepository->update($data, $post_id);
     }
     public function destroy(int $post_id) : ?Post

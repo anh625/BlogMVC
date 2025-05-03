@@ -3,7 +3,7 @@
 namespace App\Repositories\Impl;
 
 use App\Models\Category;
-use App\Repositories\ICategoryRepository;
+use App\Repositories\Contracts\ICategoryRepository;
 
 class CategoryRepository implements ICategoryRepository
 {
@@ -40,5 +40,10 @@ class CategoryRepository implements ICategoryRepository
     {
         $category = $this->findById($id);
         return $category->delete();
+    }
+
+    public function getPostsForCategory($categoryId)
+    {
+        return $this->model->findOrFail($categoryId)->posts;
     }
 }

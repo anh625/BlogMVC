@@ -2,20 +2,21 @@
 
 namespace App\Services\Impl;
 
-use App\Repositories\Contracts\ICategoryRepository;
-use App\Services\Contracts\ICategoryService;
-use Illuminate\Support\Str;
+use App\Repositories\Contracts\ICommentRepository;
+use App\Services\Contracts\ICommentService;
+use Illuminate\Support\Facades\Auth;
 
-class CategoryService implements ICategoryService
+class CommentService implements ICommentService
 {
     protected $repository;
 
-    public function __construct(ICategoryRepository $repository)
+    public function __construct(ICommentRepository $repository)
     {
         $this->repository = $repository;
     }
 
     public function getAll()
+
     {
         return $this->repository->getAll();
     }
@@ -27,13 +28,13 @@ class CategoryService implements ICategoryService
 
     public function create(array $data)
     {
-        $data['category_slug'] = Str::slug($data['category_name']);
+        $user = session('user')->getAttributes()['user_id'];
+        $data['user_id'] = $user;
         return $this->repository->create($data);
     }
 
     public function update($id, array $data)
     {
-        $data['category_slug'] = Str::slug($data['category_name']);
         return $this->repository->update($id, $data);
     }
 
@@ -41,4 +42,10 @@ class CategoryService implements ICategoryService
     {
         return $this->repository->delete($id);
     }
+
+    public function getCommentsByPostId($post_id)
+{
+    return $this->repository->getCommentsByPostId($post_id);
+}
+
 }

@@ -1,12 +1,15 @@
 <?php
 
-namespace App\Services;
+namespace App\Repositories\Contracts;
 
-interface ICategoryService
+interface ICommentRepository
 {
+    //
     public function getAll();
     public function findById($id);
     public function create(array $data);
     public function update($id, array $data);
     public function delete($id);
+    public function getCommentsByPostId($postId);
+
 }

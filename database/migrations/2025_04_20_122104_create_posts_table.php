@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('image');
             $table->string('user_id');
             $table->unsignedBigInteger('category_id');
-            $table->string('view_counts')->default(false);
+            $table->integer('view_counts')->default(0);
             $table->boolean('post_status')->default(true);
             $table->timestamps();
 

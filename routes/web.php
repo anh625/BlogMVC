@@ -4,17 +4,17 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CommentController;
 
 //Route::get('/', [AuthController::class,'index']);
 Route::get('sign-in', [AuthController::class,'signin'])->name('sign-in');
 Route::post('post-sign-in', [AuthController::class, 'login'])->name('login');
 
-Route::get('sign-up', [AuthController::class,'signup'])->name('sign-up');
-Route::post('post-sign-up', [AuthController::class,'register'])->name('register');
+Route::get('sign-up', [AuthController::class, 'signup'])->name('sign-up');
+Route::post('post-sign-up', [AuthController::class, 'register'])->name('register');
 
-Route::get('logout', [AuthController::class,'logout'])->name('logout');
+Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
 
 
@@ -40,14 +40,34 @@ Route::get('/posts/{id}', [PostController::class, 'showById'])->name('posts.show
 
 //Route Categories
 Route::middleware(['admin'])->group(function () {
-Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
-Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create');
-Route::post('/categories/store', [CategoryController::class, 'store'])->name('categories.store');
-Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])->name('categories.destroy');
-Route::get('/categories/{id}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
-Route::put('/categories/{id}', [CategoryController::class, 'update'])->name('categories.update');
+    Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
+    Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create');
+    Route::post('/categories/store', [CategoryController::class, 'store'])->name('categories.store');
+    Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+    Route::get('/categories/{id}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
+    Route::put('/categories/{id}', [CategoryController::class, 'update'])->name('categories.update');
 });
 
 
+//Route Comments
+Route::middleware(['user'])->group(function () {
+    Route::get('/comments', [CommentController::class, 'index'])->name('comments.index');
+    Route::get('/comments/create', [CommentController::class, 'create'])->name('comments.create');
+    Route::post('/posts/{id}', [CommentController::class, 'store'])->name('comments.store');
+    Route::delete('/comments/{id}', [CommentController::class, 'destroy'])->name('comments.destroy');
+    // Route::get('/posts/{id}', [CommentController::class, 'getCommentsByPostId'])->name('comments.getCommentsByPostId');
 
-Route::get('/{id}', [AuthController::class,'signin']);
+    // Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
+});
+
+// Chỉ admin mới được sửa hoặc xóa bình luận
+// Route::middleware(['admin'])->group(function () {
+    // Route::get('/comments/{id}/edit', [CommentController::class, 'edit'])->name('comments.edit');
+    // Route::put('/comments/{id}', [CommentController::class, 'update'])->name('comments.update');
+    // Route::delete('/comments/{id}', [CommentController::class, 'destroy'])->name('comments.destroy');
+// });
+
+
+
+
+Route::get('/{id}', [AuthController::class, 'signin']);

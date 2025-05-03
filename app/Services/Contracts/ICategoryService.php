@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Services\Contracts;
 
-interface ICategoryRepository
+interface ICategoryService
 {
     public function getAll();
     public function findById($id);

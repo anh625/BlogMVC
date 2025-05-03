@@ -16,19 +16,19 @@ class PostService implements IPostService
 {
     private IPostRepository $postRepository;
     private ICategoryRepository $categoryRepository;
-    private IUserRepository $userRepository;
+    //private IUserRepository $userRepository;
     private PostDataMapper $postDataMapper;
     private UserSession $userSession;
 
     public function __construct(IPostRepository $postRepository,
                                 ICategoryRepository $categoryRepository,
-                                IUserRepository $userRepository,
+                                //IUserRepository $userRepository,
                                 PostDataMapper $postDataMapper,
                                 UserSession $userSession)
     {
         $this->postRepository = $postRepository;
         $this->categoryRepository = $categoryRepository;
-        $this->userRepository = $userRepository;
+        //->userRepository = $userRepository;
         $this->postDataMapper = $postDataMapper;
         $this->userSession = $userSession;
     }
@@ -39,7 +39,18 @@ class PostService implements IPostService
     public function showById(int $id) : ?array
     {
         $data['post'] = $this->postRepository->getById($id);
-        $this->postRepository->incrementView($id);
+        if(empty($data['post'])){
+            return $data['post'];
+        }
+        //dd($this->userSession->getUser());
+        $user_id = '';
+        if($this->userSession->getUser()){
+            $user_id = $this->userSession->getUser()['user_id'];
+        }
+
+        if( $user_id != $data['post']->user_id ){
+            $this->postRepository->incrementView($id);
+        }
         return $data;
     }
     public function getById(int $id) : ?Post
@@ -81,6 +92,7 @@ class PostService implements IPostService
             return null;
         }
         $data = $this->postDataMapper->mapForEdit($request);
+        //dd($data);
         return $this->postRepository->update($data, $post_id);
     }
     public function destroy(int $post_id) : ?Post

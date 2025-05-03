@@ -3,16 +3,16 @@
 @extends('layouts.app')
 @section('content')
 
-    <div class="container">
+    <div class="container py-4">
         <!-- Nội dung form ở đây -->
         <div class="container">
             <h2>Thêm bài viết mới</h2>
 
-            <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
+            <form id="postForm" action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @include('posts.form', ['post' => null])
                 <button type="submit" class="btn btn-success mt-2">Lưu</button>
-                <a href="{{ route('posts.show') }}" class="btn btn-secondary mt-2">Quay lại</a>
+                <a href="{{ route('user.index') }}" class="btn btn-secondary mt-2">Quay lại</a>
             </form>
         </div>
         @if ($errors->any())

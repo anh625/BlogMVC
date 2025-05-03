@@ -24,9 +24,9 @@ abstract class BaseRepository
 
     public function update(array $data, string|int $id)
     {
+        //dd($data);
         $record = $this->model->where($this->primaryKey, $id)->first();
         if (!$record) return null;
-
         $record->update($data);
         return $record;
     }

@@ -21,13 +21,20 @@ class UserRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             //
-            'email' => 'required|email',
-            'password' => 'required|string|confirmed',
             'name' => 'required|string',
             'phone_number' => 'required|string',
         ];
+        $rules['avatar'] = [
+            'nullable',
+            'regex:/^data:image\/(jpeg|png|jpg|gif|svg\+xml);base64,/',
+        ];
+        if($this->method() == 'POST') {
+            $rules['email'] = 'required|email|unique:users,email';
+            $rules['password'] = 'required|string|confirmed';
+        }
+        return $rules;
     }
 
     public function messages(): array
@@ -42,6 +49,7 @@ class UserRequest extends FormRequest
             'name.required' => 'Vui lòng nhập tên.',
 
             'phone_number.required' => 'Vui lòng nhập số điện thoại.',
+            'avatar.regex' => 'Định dạng ảnh không hợp lệ. Vui lòng tải lên ảnh hợp lệ (jpeg, png, jpg, gif, svg).',
         ];
     }
 }

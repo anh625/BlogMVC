@@ -25,4 +25,5 @@ interface IPostService
     public function destroy(int $post_id) : ?Post;
     public function getAllCategories() : ?Collection ;
     public function getPopularPosts(int|null $id) ;
+    public function getById(int $id);
 }

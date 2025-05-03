@@ -44,6 +44,7 @@ class UserService implements IUserService
             return null;
         }
         $data = $this->userDataMapper->mapForEdit($request);
+        $data['user_id'] = $id;
         return $this->repository->update($data, $id);
     }
 

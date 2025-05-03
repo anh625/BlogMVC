@@ -49,7 +49,7 @@ class PostController extends Controller
     public function showById(int $post_id)
     {
         $data = $this->postService->showById($post_id);
-        if ($data['post'] == null) {
+        if ($data == null) {
             $this->userSession->flash('error', 'Post not found');
             return redirect()->route('posts.show');
         }
@@ -88,7 +88,7 @@ class PostController extends Controller
     {
         //dd($request->all());
         if($this->postService->add($request)){
-            return redirect('/posts');
+            return redirect()->route('user.index');
         }
         return redirect()->back()
             ->withErrors([])
@@ -97,8 +97,12 @@ class PostController extends Controller
 
     public function showFormEditPost(int $post_id)
     {
-        $categories = $this->postService->getAllCategories();
         $post = $this->postService->getById($post_id);
+        if ($post == null) {
+            $this->userSession->flash('error', 'Post not found');
+            return redirect()->route('posts.show');
+        }
+        $categories = $this->postService->getAllCategories();
         $user_id = $post->user_id;
         if(!$this->userSession->isUserUsing($user_id)){
             $this->userSession->flash('error', "You don't have permission to edit this post");
@@ -110,7 +114,7 @@ class PostController extends Controller
     public function update(PostRequest $request, int $post_id)
     {
         if($this->postService->edit($post_id, $request)){
-            return redirect('/posts');
+            return redirect()->route('user.index');
         }
         return back()
             ->withErrors(['error' => 'Permission denied'])
@@ -119,7 +123,7 @@ class PostController extends Controller
 
     public function destroy(int $post_id){
         if($this->postService->destroy($post_id)){
-            return redirect('/posts');
+            return redirect()->route('user.index');
         }
         return back()
             ->withErrors(['error' => 'Permission denied']);

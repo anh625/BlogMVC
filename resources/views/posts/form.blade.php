@@ -7,12 +7,21 @@
 
 <input type="text" name="description" class="form-control mb-2" placeholder="Mô tả" value="{{ old('description', $post->description ?? '') }}" required>
 
-@if(isset($post) && $post->image)
-    <img src="{{ asset('storage/' . $post->image) }}" width="120" class="mb-2"><br>
-@endif
+
 <label for="image" class="form-label">Chọn ảnh tiêu đề của bài viết</label>
-<input type="file" name="image" class="form-control mb-2" {{ isset($post) ? '' : 'required' }}>
-<small class="text-muted">Vui lòng chọn kích thước ảnh 164x164 để rõ nét nhất</small>
+<div>
+    <input type="file" id="titleImg" class="form-control mb-2" {{ isset($post) ? '' : 'required' }}>
+    <div style="width: 300px; height: 300px;">
+        @if(isset($post) && $post->image)
+            <img id="titleImgPreview" src="{{ asset('storage/' . $post->image) }}" style="max-width: 100%;" class="mb-2" alt="Posts image"><br>
+        @else
+            <img id="titleImgPreview" style="max-width: 100%;" class="mb-2" >
+        @endif
+    </div>
+</div>
+<!-- Input ẩn để gửi dữ liệu ảnh đã crop -->
+<input type="hidden" name="thumbnail" id="cropped_image">
+
 <br/>
 <br/>
 
@@ -35,3 +44,48 @@
         <label class="form-check-label">Hiển thị</label>
     </div>
 @endif
+<script>
+    let cropper;
+    document.getElementById('titleImg').addEventListener('change', function (e) {
+        const image = document.getElementById('titleImgPreview');
+        const file = e.target.files[0];
+        const imageUrl = URL.createObjectURL(file);
+        image.onload = function () {
+            if (cropper) cropper.destroy();
+            cropper = new Cropper(image, {
+                aspectRatio: 1,
+                viewMode: 1,
+                dragMode: 'move',
+                background: false,
+                cropBoxMovable: false,
+                cropBoxResizable: false,
+                ready() {
+                    const cropBox = this.cropper.cropBox;
+                    cropBox.style.borderRadius = '5%';
+                    cropBox.style.overflow = 'hidden';
+                }
+            });
+        };
+        image.src = imageUrl;
+
+    });
+    document.getElementById('postForm').addEventListener('submit', function (e) {
+         // Ngăn form gửi ngay
+
+        if (cropper) {
+            e.preventDefault();
+            const canvas = cropper.getCroppedCanvas();
+            if (!canvas) {
+                alert('Không thể crop ảnh!');
+                return;
+            }
+
+            // Gán dữ liệu base64 vào input ẩn
+            document.getElementById('cropped_image').value = canvas.toDataURL('image/png');
+
+            // Gửi form thủ công sau khi đã gán xong dữ liệu
+            //console.log(document.getElementById('cropped_image').value)
+            this.submit();
+        }
+    });
+</script>

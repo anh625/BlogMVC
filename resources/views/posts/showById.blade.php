@@ -182,7 +182,7 @@
                                 @if(is_object($data['popularPosts']))
                                     @foreach($data['popularPosts'] as $p)
                                         <li>
-                                            <a href="">
+                                            <a href="{{ route('posts.showById',$p->post_id) }}">
                                                 <img src="{{ asset('storage/' . $p->image) }}" alt="Image placeholder" class="me-4 rounded">
                                                 <div class="text">
                                                     <h4>{{ $p->title }}</h4>

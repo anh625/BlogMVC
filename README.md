@@ -68,10 +68,15 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 run:
 composer require intervention/image
 composer require laracasts/flash
+php artisan storage:link
+npm install cropperjs
+npm install
+npm run dev
 
 xampp/php/php.ini
 ;extension=gd -> extension=gd
 
 .env
 add PAGINATION_PER_PAGE=5
+
 

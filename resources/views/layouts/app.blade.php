@@ -40,6 +40,10 @@
         });
     </script>
 
+    <link href="https://cdn.jsdelivr.net/npm/cropperjs@1.5.13/dist/cropper.min.css" rel="stylesheet" />
+
+    <script src="https://cdn.jsdelivr.net/npm/cropperjs@1.5.13/dist/cropper.min.js"></script>
+
     <meta name="author" content="Untree.co">
     <link rel="shortcut icon" href="favicon.png">
 
@@ -93,7 +97,6 @@
         });
     });
 </script>
-
 @if(session('error'))
     <x-toast :toasts="[
     ['title' => 'Error!', 'message' => session('error'), 'type' => 'danger']

@@ -14,7 +14,10 @@ class UserSession extends SessionManager{
 
     public static function getUser()
     {
-        return session('user');
+        if (session('user')){
+            return session('user')->getAttributes();
+        }
+        return null;
     }
 
     public static function setUser($user): void

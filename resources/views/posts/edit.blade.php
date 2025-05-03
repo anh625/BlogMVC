@@ -3,17 +3,17 @@
 
 
 @section('content')
-    <div class="container">
+    <div class="container py-4">
         <h2>Sửa bài viết</h2>
 
-        <form action="{{ route('posts.update', $post->post_id) }}" method="POST" enctype="multipart/form-data">
+        <form id="postForm" action="{{ route('posts.update', $post->post_id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
             @include('posts.form', ['post' => $post])
 
             <button type="submit" class="btn btn-primary mt-2">Cập nhật</button>
-            <a href="{{ route('posts.show') }}" class="btn btn-secondary mt-2">Quay lại</a>
+            <a href="{{ route('user.index') }}" class="btn btn-secondary mt-2">Quay lại</a>
         </form>
     </div>
     @if ($errors->any())

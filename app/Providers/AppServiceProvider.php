@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Services\Impl\PostService;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -20,5 +22,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
+        View::composer('*', function ($view) {
+            $postService = app(PostService::class);
+            $view->with('allCategories', $postService->getAllCategories());
+        });
     }
 }

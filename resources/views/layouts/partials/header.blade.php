@@ -18,7 +18,12 @@
                         <ul class="js-clone-nav d-none d-lg-inline-block text-start site-menu mx-auto">
                             <li><a href="{{ route('posts.show') }}">Home</a></li>
                             <li class="has-children active">
-                                <a href="{{ route('posts.show') }}">Pages</a>
+                                <a href="#">Category</a>
+                                    <ul class="dropdown">
+                                        @foreach($allCategories as $c)
+                                            <li><a href="{{ route('posts.showByCategoryId', $c['category_id']) }}"> {{ $c['category_name'] }} </a></li>
+                                        @endforeach
+                                    </ul>
 {{--                                <ul class="dropdown">--}}
 {{--                                    <li><a href="search-result.html">Search Result</a></li>--}}
 {{--                                    <li><a href="blog.html">Blog</a></li>--}}
@@ -43,7 +48,7 @@
 {{--                            <li><a href="about.html">Politics</a></li>--}}
                         </ul>
                     </div>
-                    <div class="col-2 text-end">
+                    <div class="col-2 text-end d-flex gap-3">
                         <a href="#" class="burger ms-auto float-end site-menu-toggle js-menu-toggle d-inline-block d-lg-none light">
                             <span></span>
                         </a>
@@ -56,6 +61,42 @@
                                 });
                             </script>
                         </form>
+                        @if(session()->has('user'))
+                        <ul class="d-none d-lg-inline-flex  align-items-center  site-menu">
+                            @php
+                                $avatar = 'images/users/avatar/default.png';
+                                if(session()->has('user') && \App\Session\UserSession::getUser()['user_image'])
+                                    $avatar = \App\Session\UserSession::getUser()['user_image'];
+                                $name = \App\Session\UserSession::getUser()['name'];
+                            @endphp
+                            <li class="has-children active">
+                                <img src="{{ asset('storage/'.$avatar) }}" alt="avatar"
+                                     id="avatar" class="avatar"/>
+                            <ul class="dropdown" style="margin-left: -70px; margin-top: 10px; padding: 0">
+                                <li class="hover-gray"><a href="{{ route('user.index') }}"
+                                        style="font-size: 20px;font-weight: 525;">
+{{--                                        <img src="{{ asset('storage/'.$avatar) }}" alt="avatar"--}}
+{{--                                             id="avatar" class="avatar"/><br>--}}
+                                        {{ $name }}
+                                    </a></li>
+                                <li class="hover-gray">
+                                    <a
+                                        href="{{ route('user.edit') }}"
+                                        style="font-size: 20px;font-weight: 525;">
+                                        Sửa thông tin cá nhân
+                                    </a></li>
+                                <li class="hover-gray"><a style="font-size: 20px;font-weight: 525;">Góp ý</a></li>
+                                <li class="hover-gray"><a href="{{ route('logout') }}"
+                                        style="font-size: 20px;font-weight: 525;">Đăng xuất
+                                    </a></li>
+                            </ul>
+                            </li>
+                        </ul>
+                        @else
+                        <div class="d-none d-lg-inline-flex  align-items-center text-#fbfae9">
+                            <a class="login-link" href="{{ route('sign-in') }}">Đăng nhập</a>
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -74,3 +115,38 @@
     </div>
 @endif
 
+<style>
+    .hover-gray {
+        transition: all 0.2s ease;      /* Hiệu ứng mượt */
+    }
+
+    .hover-gray:hover {
+        background-color: #f0f0f0;      /* Màu xám khi hover */
+    }
+
+    .login-link {
+        color: #fbfae9;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .login-link:hover {
+        color: #ffffff;
+        text-decoration: underline;
+        font-weight: bold;
+    }
+
+    .avatar{
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: #ccc;
+        display: inline-block;
+        margin-right: 10px;
+    }
+</style>
+<script>
+    document.getElementById("avatar").addEventListener("click", function () {
+        window.location.href = '{{ route('user.index') }}'
+    });
+</script>

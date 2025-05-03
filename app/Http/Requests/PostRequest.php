@@ -30,11 +30,17 @@ class PostRequest extends FormRequest
         ];
 
         if ($this->isMethod('post')) {
-            // Khi tạo mới, bắt buộc có hình ảnh
-            $rules['image'] = 'required|image|mimes:jpeg,png,jpg,gif,svg|max:20480';
+            // Khi tạo mới, bắt buộc có ảnh dạng base64
+            $rules['thumbnail'] = [
+                'required',
+                'regex:/^data:image\/(jpeg|png|jpg|gif|svg\+xml);base64,/',
+            ];
         } else {
-            // Khi cập nhật, hình ảnh không bắt buộc
-            $rules['image'] = 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:20480';
+            // Khi cập nhật, không bắt buộc có ảnh
+            $rules['image'] = [
+                'nullable',
+                'regex:/^data:image\/(jpeg|png|jpg|gif|svg\+xml);base64,/',
+            ];
         }
 
         return $rules;
@@ -46,10 +52,8 @@ class PostRequest extends FormRequest
             'title.required' => 'Title is required',
             'description.required' => 'Description is required',
             'content.required' => 'Content is required',
-            'image.required' => 'Image is required',
-            'image.image' => 'Image is image',
-            'image.mimes' => 'Image is mimes',
-            'image.max' => 'Image is too large',
+            'thumbnail.required' => 'Ảnh là bắt buộc.',
+            'thumbnail.regex' => 'Định dạng ảnh không hợp lệ. Vui lòng tải lên ảnh hợp lệ (jpeg, png, jpg, gif, svg).',
         ];
     }
 }

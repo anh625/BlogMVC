@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Impl;
 use App\Models\Comment;
-use App\Repositories\ICommentRepository;
+use App\Repositories\Contracts\ICommentRepository;
 
 class CommentRepository implements ICommentRepository
 {
@@ -32,4 +32,9 @@ class CommentRepository implements ICommentRepository
     {
         return Comment::destroy($id);
     }
+    public function getCommentsByPostId($post_id)
+{
+    return Comment::where('post_id', $post_id)->get();
+}
+
 }

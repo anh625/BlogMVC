@@ -30,11 +30,11 @@
                     <td>{{ $comment->created_at }}</td>
                     <td>
                         {{-- <a href="{{ route('comments.edit', $comment->cmt_id) }}" class="btn btn-primary btn-sm">Sửa</a> --}}
-                        {{-- <form action="{{ route('comments.destroy', $comment->cmt_id) }}" method="POST" style="display:inline;">
+                        <form action="{{ route('comments.destroy', $comment->cmt_id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" onclick="return confirm('Bạn có chắc chắn muốn xóa?')" class="btn btn-danger btn-sm">Xóa</button>
-                        </form> --}}
+                        </form>
                     </td>
                 </tr>
             @endforeach

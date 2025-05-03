@@ -45,8 +45,13 @@ Route::middleware(['admin'])->group(function () {
 Route::middleware(['user'])->group(function () {
     Route::get('/comments', [CommentController::class, 'index'])->name('comments.index');
     Route::get('/comments/create', [CommentController::class, 'create'])->name('comments.create');
-    Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
+    Route::post('/posts/{id}', [CommentController::class, 'store'])->name('comments.store');
+    Route::delete('/comments/{id}', [CommentController::class, 'destroy'])->name('comments.destroy');
+    // Route::get('/posts/{id}', [CommentController::class, 'getCommentsByPostId'])->name('comments.getCommentsByPostId');
+
+    // Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
 });
+
 // Chỉ admin mới được sửa hoặc xóa bình luận
 // Route::middleware(['admin'])->group(function () {
     // Route::get('/comments/{id}/edit', [CommentController::class, 'edit'])->name('comments.edit');

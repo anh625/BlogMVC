@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CategoryRequest;
-use App\Services\ICategoryService;
+use App\Services\Contracts\ICategoryService;
 use Illuminate\Http\Request;
 
 

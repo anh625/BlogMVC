@@ -2,9 +2,9 @@
 
 namespace App\Providers;
 
-use App\Repositories\ICategoryRepository;
+use App\Repositories\Contracts\ICategoryRepository;
 use App\Repositories\Impl\CategoryRepository;
-use App\Services\ICategoryService;
+use App\Services\Contracts\ICategoryService;
 use App\Services\Impl\CategoryService;
 use Illuminate\Support\ServiceProvider;
 

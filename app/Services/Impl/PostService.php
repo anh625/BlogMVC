@@ -6,7 +6,7 @@ use App\Mappers\PostDataMapper;
 use App\Models\Post;
 use App\Repositories\Contracts\IPostRepository;
 use App\Repositories\Contracts\IUserRepository;
-use App\Repositories\ICategoryRepository;
+use App\Repositories\Contracts\ICategoryRepository;
 use App\Services\Contracts\IPostService;
 use App\Session\UserSession;
 use Illuminate\Support\Collection;
@@ -39,7 +39,11 @@ class PostService implements IPostService
     public function showById(int $id) : ?array
     {
         $data['post'] = $this->postRepository->getById($id);
-        $this->postRepository->incrementView($id);
+        $user_id = empty($this->userSession->getUser()) ? $this->userSession->getUser() : $this->userSession->getUser()->getAttributes()['user_id'];
+        if($user_id != $data['post']->user_id){
+            $this->postRepository->incrementView($id);
+        }
+        // $this->postRepository->incrementView($id);
         return $data;
     }
     public function getById(int $id) : ?Post

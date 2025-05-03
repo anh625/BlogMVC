@@ -2,8 +2,8 @@
 
 namespace App\Services\Impl;
 
-use App\Repositories\ICategoryRepository;
-use App\Services\ICategoryService;
+use App\Repositories\Contracts\ICategoryRepository;
+use App\Services\Contracts\ICategoryService;
 use Illuminate\Support\Str;
 
 class CategoryService implements ICategoryService

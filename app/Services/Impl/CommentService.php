@@ -2,8 +2,8 @@
 
 namespace App\Services\Impl;
 
-use App\Repositories\ICommentRepository;
-use App\Services\ICommentService;
+use App\Repositories\Contracts\ICommentRepository;
+use App\Services\Contracts\ICommentService;
 use Illuminate\Support\Facades\Auth;
 
 class CommentService implements ICommentService
@@ -16,6 +16,7 @@ class CommentService implements ICommentService
     }
 
     public function getAll()
+
     {
         return $this->repository->getAll();
     }
@@ -27,9 +28,8 @@ class CommentService implements ICommentService
 
     public function create(array $data)
     {
-        // $user = session('user');
-        // $data['user_id'] = $user->user_id;
-        // dd($data);
+        $user = session('user')->getAttributes()['user_id'];
+        $data['user_id'] = $user;
         return $this->repository->create($data);
     }
 
@@ -42,4 +42,10 @@ class CommentService implements ICommentService
     {
         return $this->repository->delete($id);
     }
+
+    public function getCommentsByPostId($post_id)
+{
+    return $this->repository->getCommentsByPostId($post_id);
+}
+
 }

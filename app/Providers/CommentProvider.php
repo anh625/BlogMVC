@@ -2,9 +2,9 @@
 
 namespace App\Providers;
 
-use App\Repositories\ICommentRepository;
+use App\Repositories\Contracts\ICommentRepository;
 use App\Repositories\Impl\CommentRepository;
-use App\Services\ICommentService;
+use App\Services\Contracts\ICommentService;
 use App\Services\Impl\CommentService;
 use Illuminate\Support\ServiceProvider;
 

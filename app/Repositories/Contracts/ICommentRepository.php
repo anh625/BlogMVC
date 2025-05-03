@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services;
+namespace App\Repositories\Contracts;
 
-interface ICommentService
+interface ICommentRepository
 {
     //
     public function getAll();
@@ -10,4 +10,6 @@ interface ICommentService
     public function create(array $data);
     public function update($id, array $data);
     public function delete($id);
+    public function getCommentsByPostId($postId);
+
 }

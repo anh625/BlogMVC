@@ -37,7 +37,7 @@ class PostController extends Controller
             $data['title'] = "'".$data['title']."'";
         }
         $data['categories'] = $this->postService->getAllCategories();
-        $data['popularPosts'] = $this->postService->getPopularPosts();
+        $data['popularPosts'] = $this->postService->getPopularPosts(null);
         return view('posts.show', compact('data'));
     }
 
@@ -86,7 +86,6 @@ class PostController extends Controller
 
     public function store(PostRequest $request)
     {
-        //dd($request->all());
         if($this->postService->add($request)){
             return redirect('/posts');
         }

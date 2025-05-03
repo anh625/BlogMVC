@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CommentRequest;
-use App\Services\ICommentService;
+use App\Services\Contracts\ICommentService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,10 +28,12 @@ class CommentController extends Controller
         return view('admin.comments.create');
     }
 
-    public function store(CommentRequest $request)
+    public function store(CommentRequest $request, $id)
     {
-        $this->commentService->create($request->validated());
-        return redirect()->route('comments.index')->with('success', 'Tạo bình luận thành công!');
+        $data = $request->validated();
+        $data['post_id'] = $id;
+        $this->commentService->create($data);
+        return redirect()->route('posts.showById', $id)->with('success', 'Tạo bình luận thành công!');
     }
 
     public function edit($id)
@@ -51,5 +53,11 @@ class CommentController extends Controller
         $this->commentService->delete($id);
         return redirect()->route('comments.index')->with('success', 'Xóa bình luận thành công!');
     }
-}
 
+    // public function getCommentsByPostId($post_id)
+    // {
+    //     $comments = $this->commentService->getCommentsByPostId($post_id);
+    //     dd($comments);
+    //     // return view('posts.showById', compact('comments', 'post_id'));
+    // }
+}

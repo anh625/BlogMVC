@@ -43,6 +43,7 @@
 {{--                                    </li>--}}
 {{--                                </ul>--}}
                             </li>
+                            <li><a href="{{ route('contact.index') }}">Contact</a></li>
 {{--                            <li><a href="category.html">Culture</a></li>--}}
 {{--                            <li><a href="services.html">Business</a></li>--}}
 {{--                            <li><a href="about.html">Politics</a></li>--}}
@@ -83,18 +84,17 @@
                                     <a
                                         href="{{ route('user.edit') }}"
                                         style="font-size: 20px;font-weight: 525;">
-                                        Sửa thông tin cá nhân
+                                        Edit profile
                                     </a></li>
-                                <li class="hover-gray"><a style="font-size: 20px;font-weight: 525;">Góp ý</a></li>
                                 <li class="hover-gray"><a href="{{ route('logout') }}"
-                                        style="font-size: 20px;font-weight: 525;">Đăng xuất
+                                        style="font-size: 20px;font-weight: 525;">Log Out
                                     </a></li>
                             </ul>
                             </li>
                         </ul>
                         @else
                         <div class="d-none d-lg-inline-flex  align-items-center text-#fbfae9">
-                            <a class="login-link" href="{{ route('sign-in') }}">Đăng nhập</a>
+                            <a class="login-link" href="{{ route('sign-in') }}">Login</a>
                         </div>
                         @endif
                     </div>

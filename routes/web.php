@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -66,7 +67,8 @@ Route::middleware(['user'])->group(function () {
     // Route::put('/comments/{id}', [CommentController::class, 'update'])->name('comments.update');
     // Route::delete('/comments/{id}', [CommentController::class, 'destroy'])->name('comments.destroy');
 // });
-
+Route::get('contact', [ContactController::class, 'index'])->name('contact.index');
+Route::post('contact', [ContactController::class, 'store'])->name('contact.store');
 
 
 

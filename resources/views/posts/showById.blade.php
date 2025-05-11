@@ -1,14 +1,18 @@
 @extends('layouts.app')
 @section('content')
     <div class="site-cover site-cover-sm same-height overlay single-page"
-        style="background-image: url('{{ asset('storage/'.$data['post']->image) }}');">
+        style="background-image: url('{{ asset('storage/'.$data['post']->banner_image) }}');">
         <div class="container">
             <div class="row same-height justify-content-center">
                 <div class="col-md-6">
                     <div class="post-entry text-center">
                         <h1 class="mb-4">{{ $data['post']->title }}</h1>
                         <div class="post-meta align-items-center text-center">
-                            <figure class="author-figure mb-0 me-3 d-inline-block"><img src="images/person_1.jpg" alt="Image" class="img-fluid"></figure>
+                            @php
+                                $avatar = 'images/users/avatar/default.png';
+                                if($data['post']->user->user_image) $avatar = $data['post']->user->user_image;
+                            @endphp
+                            <figure class="author-figure mb-0 me-3 d-inline-block"><img src="{{ asset('storage/'.$avatar) }}" alt="Image" class="img-fluid"></figure>
                             <span class="d-inline-block mt-1">By {{ $data['post']->user->name }}</span>
                             <span>&nbsp;-&nbsp; {{ $data['post']->updated_at->format('F j, Y') }}</span>
                         </div>

@@ -29,19 +29,11 @@ class PostRequest extends FormRequest
             'category_id' => 'required',
         ];
 
-        if ($this->isMethod('post')) {
-            // Khi tạo mới, bắt buộc có ảnh dạng base64
-            $rules['thumbnail'] = [
-                'required',
-                'regex:/^data:image\/(jpeg|png|jpg|gif|svg\+xml);base64,/',
-            ];
-        } else {
-            // Khi cập nhật, không bắt buộc có ảnh
-            $rules['image'] = [
-                'nullable',
-                'regex:/^data:image\/(jpeg|png|jpg|gif|svg\+xml);base64,/',
-            ];
-        }
+        $base64Rule = 'regex:/^data:image\/(jpeg|png|jpg|gif|svg\+xml);base64,/';
+        $imageRequirement = $this->isMethod('post') ? 'required' : 'nullable';
+
+        $rules['thumbnail'] = [$imageRequirement, $base64Rule];
+        $rules['banner_image'] = [$imageRequirement, $base64Rule];
 
         return $rules;
     }
@@ -52,8 +44,10 @@ class PostRequest extends FormRequest
             'title.required' => 'Title is required',
             'description.required' => 'Description is required',
             'content.required' => 'Content is required',
-            'thumbnail.required' => 'Ảnh là bắt buộc.',
-            'thumbnail.regex' => 'Định dạng ảnh không hợp lệ. Vui lòng tải lên ảnh hợp lệ (jpeg, png, jpg, gif, svg).',
+            'thumbnail.required' => 'The thumbnail image is required.',
+            'thumbnail.regex' => 'Invalid thumbnail image format. Please upload a valid image (JPEG, PNG, JPG, GIF, or SVG).',
+            'banner_image.required' => 'The banner image is required.',
+            'banner_image.regex' => 'Invalid banner image format. Please upload a valid image (JPEG, PNG, JPG, GIF, or SVG).',
         ];
     }
 }

@@ -4,12 +4,12 @@
 
 @section('content')
     <div class="container py-4">
-        <h2>Sửa thông tin cá nhân</h2>
+        <h2>Edit profile</h2>
 
         <form id="profile" action="{{ route('user.update') }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
-            <label for="image" class="form-label">Chọn ảnh đại diện</label>
+            <label for="image" class="form-label">Choose avatar</label>
             <div>
                 <input type="file" id="titleImg" class="form-control mb-2">
                 <div style="width: 300px; height: 300px;">
@@ -23,16 +23,16 @@
             <!-- Input ẩn để gửi dữ liệu ảnh đã crop -->
             <br/>
             <br/>
-            
+
             <input type="hidden" name="avatar" id="cropped_image">
 
-            <input type="text" name="name" class="form-control mb-2" placeholder="Họ và tên" value="{{ $user->name }}" required>
+            <input type="text" name="name" class="form-control mb-2" placeholder="Full name" value="{{ $user->name }}" required>
 
 
-            <input type="number" id="phone" name="phone_number" class="form-control mb-2" placeholder="Số điện thoại" value="{{ $user->phone_number }}" required/>
+            <input type="number" id="phone" name="phone_number" class="form-control mb-2" placeholder="Phone number" value="{{ $user->phone_number }}" required/>
 
-            <button type="submit" class="btn btn-primary mt-2">Cập nhật</button>
-            <a href="{{ route('user.index') }}" class="btn btn-secondary mt-2">Quay lại</a>
+            <button type="submit" class="btn btn-primary mt-2">Edit</button>
+            <a href="{{ route('user.index') }}" class="btn btn-secondary mt-2">Quit</a>
         </form>
     </div>
     @if ($errors->any())

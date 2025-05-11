@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('description');
             $table->longText('content');
             $table->string('image');
+            $table->string('banner_image');
             $table->string('user_id');
             $table->unsignedBigInteger('category_id');
             $table->integer('view_counts')->default(0);

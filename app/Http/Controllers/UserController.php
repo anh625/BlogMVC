@@ -25,7 +25,8 @@ class UserController extends Controller
         $user = $this->userService->findById($user_id);
         $perPage = config('pagination.per_page');
         $posts = $user->posts()->orderBy('created_at', 'desc')->paginate($perPage);
-        return view('user.dashboard', compact('user', 'posts'));
+        $data['posts'] = $posts;
+        return view('user.dashboard', compact('user', 'data'));
     }
 
     public function edit(){

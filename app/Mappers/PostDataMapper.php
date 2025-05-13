@@ -12,22 +12,24 @@ class PostDataMapper{
 
     private function getData(PostRequest $request): array
     {
-        $titleImagePath = null;
         $thumbnailPath = null;
-
-        if ($request->has('title_image') && $request->get('title_image') != null) {
-            $titleImagePath = $this->saveBase64Image($request->input('title_image'), 'images/posts/title', 'title_');
-        }
+        $bannerPath = null;
 
         if ($request->has('thumbnail') && $request->get('thumbnail') != null) {
             $thumbnailPath = $this->saveBase64Image($request->input('thumbnail'), 'images/posts/thumbnail', 'thumb_');
         }
+
+        if ($request->has('banner_image') && $request->get('banner_image') != null) {
+            $bannerPath = $this->saveBase64Image($request->input('banner_image'), 'images/posts/banner', 'banner_');
+        }
+
 
         return [
             'title' => $request->get('title'),
             'description' => $request->get('description'),
             'content' => $request->get('content'),
             'image' => $thumbnailPath,
+            'banner_image' => $bannerPath,
             'user_id' => $this->userSession->getUser()['user_id'],
             'category_id' => $request->get('category_id'),
         ];
@@ -43,6 +45,9 @@ class PostDataMapper{
             unset($data['image']);  // Nếu không có ảnh mới, bỏ qua trường ảnh
         }
 
+        if (!$request->has('banner_image') || $request->get('banner_image') == null) {
+            unset($data['banner_image']);  // Nếu không có ảnh mới, bỏ qua trường ảnh
+        }
 
         // Thêm trạng thái bài viết vào dữ liệu
         $data['post_status'] = $request->get('post_status');

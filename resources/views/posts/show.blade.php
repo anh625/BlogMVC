@@ -25,7 +25,7 @@
                         @foreach($data['posts'] as $p)
                             <div class="blog-entry d-flex blog-entry-search-item">
                                 <a href="{{ asset(route('posts.showById', $p->post_id)) }}" class="img-link me-4">
-                                    <img src="{{ asset('storage/' . $p->image) }}" alt="Image" class="img-fluid">
+                                    <img style="max-width: 230px; max-height: 230px; object-fit: contain;" src="{{ asset('storage/' . $p->image) }}" alt="Image" class="img-fluid">
                                 </a>
                                 <div>
                                     <span class="date">{{ $p->updated_at->format('M. jS, Y') }} &bullet; <a href="{{ route('posts.showByCategoryId', $p->category_id) }}">{{ $p->category->category_name }}</a></span>

@@ -39,7 +39,8 @@ Route::middleware(['user'])->group(function () {
     Route::put('user/posts/update/{id}', [PostController::class, 'update'])->name('posts.update');
     Route::delete('user/posts/destroy/{id}', [PostController::class, 'destroy'])->name('posts.destroy');
 });
-Route::get('user/posts/{id}', [PostController::class, 'showById'])->name('posts.showById');
+Route::get('user/posts/{id}', [PostController::class, 'showById'])->name('posts.showById')->withoutMiddleware('user');
+
 
 Route::get('/admin/posts', [PostController::class, 'index'])->name('posts.show');
 

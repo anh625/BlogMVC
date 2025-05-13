@@ -24,6 +24,12 @@ class PostRepository extends BaseRepository implements IPostRepository
             ->paginate($this->perPage);
     }
 
+    public function showForAdmin(): LengthAwarePaginator
+    {
+        return Post::with('category')->paginate($this->perPage);
+    }
+
+
     public function getByTitle(string $title): ?LengthAwarePaginator
     {
         return Post::where('title', 'like', '%' . $title . '%')->where('post_status', true)->paginate($this->perPage);
@@ -63,7 +69,6 @@ class PostRepository extends BaseRepository implements IPostRepository
 
     public function getPopularPosts(int|null $id = null){
         $query = $this->model
-            ->where('post_status', true)
             ->where('post_status', true)
             ->orderBy('view_counts', 'desc');
 

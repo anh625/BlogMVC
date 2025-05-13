@@ -36,6 +36,9 @@ class PostService implements IPostService
     public function show() : LengthAwarePaginator{
         return $this->postRepository->show();
     }
+    public function showForAdmin() : LengthAwarePaginator{
+        return $this->postRepository->showForAdmin();
+    }
     public function showById(int $id) : ?array
     {
         $data['post'] = $this->postRepository->getById($id);

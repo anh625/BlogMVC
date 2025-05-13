@@ -32,6 +32,7 @@ class CategoryRequest extends FormRequest
         return [
             'category_name.required' => 'Tên danh mục là bắt buộc.',
             'category_name.max' => 'Tên danh mục không được vượt quá 255 ký tự.',
+            'category_name.unique' => 'Tên danh mục đã tồn tại.',
             // 'category_slug.max' => 'Slug không được vượt quá 255 ký tự.',
             // 'category_slug.unique' => 'Slug đã tồn tại trong hệ thống.',
         ];

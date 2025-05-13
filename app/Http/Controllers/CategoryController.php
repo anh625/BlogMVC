@@ -39,11 +39,15 @@ class CategoryController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(CategoryRequest $request)
-    {
-        //
-        $this->categoryService->create($request->validated());
-        return redirect()->route('categories.index')->with('success', 'Danh mục tạo thành công');
+{
+    $result = $this->categoryService->create($request->validated());
+
+    if ($result === null) {
+        return redirect()->back()->with('error', 'Danh mục đã tồn tại');
     }
+
+    return redirect()->route('admin.categories.index')->with('success', 'Danh mục tạo thành công');
+}
 
     /**
      * Display the specified resource.
@@ -69,8 +73,13 @@ class CategoryController extends Controller
     public function update(CategoryRequest $request, string $id)
     {
         //
-        $category = $this->categoryService->update($id, $request->validated());
-        return redirect()->route('categories.index')->with('success', 'Danh mục cập nhật thành công');
+        $result = $this->categoryService->update($id, $request->validated());
+
+    if ($result === null) {
+        return redirect()->back()->with('error', 'Tên danh mục đã tồn tại');
+    }
+
+    return redirect()->route('admin.categories.index')->with('success', 'Cập nhật danh mục thành công');
     }
 
     /**
@@ -79,6 +88,6 @@ class CategoryController extends Controller
     public function destroy(string $id)
     {
         $this->categoryService->delete($id);
-        return redirect()->route('categories.index')->with('success', 'Danh mục đã bị xóa');
+        return redirect()->route('admin.categories.index')->with('success', 'Danh mục đã bị xóa');
     }
 }

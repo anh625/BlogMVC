@@ -22,6 +22,8 @@ class PostController extends Controller
         return redirect()->route('posts.show');
     }
     //
+
+
     private function renderPostsView($data)
     {
         if ($data['posts']->isEmpty()) {

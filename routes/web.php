@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\DashboardController;
 
 //Route::get('/', [AuthController::class,'index']);
 Route::get('sign-in', [AuthController::class,'signin'])->name('sign-in');
@@ -38,14 +40,23 @@ Route::middleware(['user'])->group(function () {
 });
 Route::get('/posts/{id}', [PostController::class, 'showById'])->name('posts.showById');
 
+Route::get('/admin/posts', [PostController::class, 'index'])->name('posts.show');
+
+//Route Dashboard
+Route::middleware(['admin'])->group(function () {
+    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard.index');
+    Route::get('/admin/posts', [AdminController::class, 'posts'])->name('admin.posts.index');
+});
+
+
 //Route Categories
 Route::middleware(['admin'])->group(function () {
-    Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
-    Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create');
-    Route::post('/categories/store', [CategoryController::class, 'store'])->name('categories.store');
-    Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])->name('categories.destroy');
-    Route::get('/categories/{id}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
-    Route::put('/categories/{id}', [CategoryController::class, 'update'])->name('categories.update');
+    Route::get('/admin/categories', [CategoryController::class, 'index'])->name('admin.categories.index');
+    Route::get('/admin/categories/create', [CategoryController::class, 'create'])->name('admin.categories.create');
+    Route::post('/admin/categories/store', [CategoryController::class, 'store'])->name('admin.categories.store');
+    Route::delete('/admin/categories/{id}', [CategoryController::class, 'destroy'])->name('admin.categories.destroy');
+    Route::get('/admin/categories/{id}/edit', [CategoryController::class, 'edit'])->name('admin.categories.edit');
+    Route::put('/admin/categories/{id}', [CategoryController::class, 'update'])->name('admin.categories.update');
 });
 
 
@@ -59,13 +70,6 @@ Route::middleware(['user'])->group(function () {
 
     // Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
 });
-
-// Chỉ admin mới được sửa hoặc xóa bình luận
-// Route::middleware(['admin'])->group(function () {
-    // Route::get('/comments/{id}/edit', [CommentController::class, 'edit'])->name('comments.edit');
-    // Route::put('/comments/{id}', [CommentController::class, 'update'])->name('comments.update');
-    // Route::delete('/comments/{id}', [CommentController::class, 'destroy'])->name('comments.destroy');
-// });
 
 
 

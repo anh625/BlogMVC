@@ -36,6 +36,9 @@ class PostService implements IPostService
     public function show() : LengthAwarePaginator{
         return $this->postRepository->show();
     }
+    public function showForAdmin() : LengthAwarePaginator{
+        return $this->postRepository->showForAdmin();
+    }
     public function showById(int $id) : ?array
     {
         $data['post'] = $this->postRepository->getById($id);
@@ -110,4 +113,12 @@ class PostService implements IPostService
     public function getPopularPosts(int|null $id = null){
         return $this->postRepository->getPopularPosts($id);
     }
+
+public function updateStatus(string $status, int $postId ): bool
+{
+    $result = $this->postRepository->update(["post_status" => $status], $postId);
+    return $result !== null;
+}
+
+
 }

@@ -32,11 +32,12 @@ Route::get('/', [PostController::class,'index']);
 Route::get('/posts', [PostController::class, 'show'])->name('posts.show');
 Route::get('/posts/category/{category_id}', [PostController::class, 'showByCategoryId'])->name('posts.showByCategoryId');
 Route::get('/posts/search/', [PostController::class, 'showByTitle'])->name('posts.searchByTitle');
+Route::put('/posts/status/{id}', [PostController::class, 'updateStatus'])->name('posts.updateStatus');
 Route::middleware(['user'])->group(function () {
     Route::get('/posts/create', [PostController::class, 'showFormCreatePost'])->name('posts.create');
     Route::post('/posts/store', [PostController::class, 'store'])->name('posts.store');
     Route::get('/posts/edit/{id}', [PostController::class, 'showFormEditPost'])->name('posts.edit');
-    Route::put('/posts/update/{id}', [PostController::class, 'update'])->name('posts.update');
+    Route::put('/posts/update/{ }', [PostController::class, 'update'])->name('posts.update');
     Route::delete('/posts/destroy/{id}', [PostController::class, 'destroy'])->name('posts.destroy');
 });
 Route::get('/posts/{id}', [PostController::class, 'showById'])->name('posts.showById');
@@ -47,6 +48,7 @@ Route::get('/admin/posts', [PostController::class, 'index'])->name('posts.show')
 Route::middleware(['admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard.index');
     Route::get('/admin/posts', [AdminController::class, 'posts'])->name('admin.posts.index');
+    Route::get('/admin/posts/{id}', [AdminController::class, 'detailpost'])->name('admin.posts.detail');
 });
 
 

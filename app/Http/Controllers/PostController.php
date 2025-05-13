@@ -129,4 +129,13 @@ class PostController extends Controller
         return back()
             ->withErrors(['error' => 'Permission denied']);
     }
+
+    public function updateStatus(Request $request, int $id)
+    {
+        if($this->postService->updateStatus($request->input("post_status"), $id )){
+            return redirect()->route('admin.posts.index');
+        }
+        return back()
+            ->withErrors(['error' => 'Permission denied']);
+    }
 }

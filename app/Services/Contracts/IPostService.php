@@ -15,6 +15,7 @@ use Illuminate\Support\Collection;
 interface IPostService
 {
     public function show() : LengthAwarePaginator;
+    public function showForAdmin() : LengthAwarePaginator;
     public function showById(int $id) : ?array;
     public function searchByTitle(string $title) : ?array;
 
@@ -26,4 +27,6 @@ interface IPostService
     public function getAllCategories() : ?Collection ;
     public function getPopularPosts(int|null $id) ;
     public function getById(int $id);
+
+    public function updateStatus(string $status,int $postId ): bool;
 }

@@ -23,6 +23,11 @@ class PostRepository extends BaseRepository implements IPostRepository
             ->where('post_status', true)
             ->paginate($this->perPage);
     }
+    public function showForAdmin(): LengthAwarePaginator
+    {
+        return Post::with('category')
+            ->paginate($this->perPage);
+    }
 
     public function getByTitle(string $title): ?LengthAwarePaginator
     {

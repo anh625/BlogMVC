@@ -17,7 +17,7 @@ class ContactController extends Controller
     }
     //
     public function index(){
-        return view('contact.form');
+        return view('user.contact.form');
     }
     public function store(ContactRequest $request){
         if($this->contactService->add($request)){

@@ -20,7 +20,7 @@ readonly class CheckLogin
     public function handle(Request $request, Closure $next): Response
     {
         if (!$this->userSession->getUser()) {
-            return redirect('/log-in')->withErrors(['error' => 'Vui lòng đăng nhập để tiếp tục!']);
+            return redirect()->route('sign-in')->withErrors(['error' => 'Vui lòng đăng nhập để tiếp tục!']);
         }
         return $next($request);
     }

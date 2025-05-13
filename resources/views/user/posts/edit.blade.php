@@ -1,5 +1,5 @@
 {{-- resources/views/posts/edit.blade.php --}}
-@extends('layouts.app')
+@extends('user.layouts.app')
 
 
 @section('content')
@@ -10,7 +10,7 @@
             @csrf
             @method('PUT')
 
-            @include('posts.form', ['post' => $post])
+            @include('user.posts.form', ['post' => $post])
 
             <button type="submit" class="btn btn-primary mt-2">EDIT</button>
             <a href="{{ route('user.index') }}" class="btn btn-secondary mt-2">QUIT</a>

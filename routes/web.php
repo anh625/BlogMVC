@@ -21,26 +21,26 @@ Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
 
 
-Route::get('user', [UserController::class,'index'])->name('user.index');
+Route::get('user/dashboard', [UserController::class,'index'])->name('user.index');
 Route::get('user/edit', [UserController::class,'edit'])->name('user.edit');
 Route::post('user/image', [UserController::class,'image'])->name('user.image');
 Route::put('user/update', [UserController::class,'update'])->name('user.update');
 
 
 
-Route::get('/', [PostController::class,'index']);
-Route::get('/posts', [PostController::class, 'show'])->name('posts.show');
-Route::get('/posts/category/{category_id}', [PostController::class, 'showByCategoryId'])->name('posts.showByCategoryId');
-Route::get('/posts/search/', [PostController::class, 'showByTitle'])->name('posts.searchByTitle');
-Route::put('/posts/status/{id}', [PostController::class, 'updateStatus'])->name('posts.updateStatus');
+Route::get('/', [AuthController::class,'index'])->name('auth.index');
+Route::get('user/posts', [PostController::class, 'show'])->name('posts.show');
+Route::get('user/posts/category/{category_id}', [PostController::class, 'showByCategoryId'])->name('posts.showByCategoryId');
+Route::get('user/posts/search/', [PostController::class, 'showByTitle'])->name('posts.searchByTitle');
 Route::middleware(['user'])->group(function () {
-    Route::get('/posts/create', [PostController::class, 'showFormCreatePost'])->name('posts.create');
-    Route::post('/posts/store', [PostController::class, 'store'])->name('posts.store');
-    Route::get('/posts/edit/{id}', [PostController::class, 'showFormEditPost'])->name('posts.edit');
-    Route::put('/posts/update/{ }', [PostController::class, 'update'])->name('posts.update');
-    Route::delete('/posts/destroy/{id}', [PostController::class, 'destroy'])->name('posts.destroy');
+    Route::get('user/posts/create', [PostController::class, 'showFormCreatePost'])->name('posts.create');
+    Route::post('user/posts/store', [PostController::class, 'store'])->name('posts.store');
+    Route::get('user/posts/edit/{id}', [PostController::class, 'showFormEditPost'])->name('posts.edit');
+    Route::put('user/posts/update/{id}', [PostController::class, 'update'])->name('posts.update');
+    Route::delete('user/posts/destroy/{id}', [PostController::class, 'destroy'])->name('posts.destroy');
 });
-Route::get('/posts/{id}', [PostController::class, 'showById'])->name('posts.showById');
+Route::get('user/posts/{id}', [PostController::class, 'showById'])->name('posts.showById')->withoutMiddleware('user');
+
 
 Route::get('/admin/posts', [PostController::class, 'index'])->name('posts.show');
 

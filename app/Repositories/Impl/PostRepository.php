@@ -29,9 +29,15 @@ class PostRepository extends BaseRepository implements IPostRepository
             ->paginate($this->perPage);
     }
 
+    public function showForAdmin(): LengthAwarePaginator
+    {
+        return Post::with('category')->paginate($this->perPage);
+    }
+
+
     public function getByTitle(string $title): ?LengthAwarePaginator
     {
-        return Post::where('title', 'like', '%' . $title . '%')->paginate($this->perPage);
+        return Post::where('title', 'like', '%' . $title . '%')->where('post_status', true)->paginate($this->perPage);
     }
 
     public function getByUserId(string $user_id): ?LengthAwarePaginator
@@ -41,13 +47,14 @@ class PostRepository extends BaseRepository implements IPostRepository
 
     public function getByCategoryId(int $category_id): ?LengthAwarePaginator
     {
-        return Post::where('category_id', $category_id)->paginate($this->perPage);
+        return Post::where('category_id', $category_id)->where('post_status', true)->paginate($this->perPage);
     }
 
     public function getCategoryWithPostCount(): ?Collection
     {
         return Post::rightJoin('categories', 'posts.category_id', '=', 'categories.category_id') // sử dụng right join
         ->select('categories.category_id', 'categories.category_name', DB::raw('COUNT(posts.post_id) as count_post')) // đếm số bài viết trong category
+        ->where('post_status', true)
         ->groupBy('categories.category_id', 'categories.category_name') // group theo category_id và category_name
         ->get()
             ->map(function ($post) {

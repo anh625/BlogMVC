@@ -26,7 +26,7 @@ class UserController extends Controller
         $perPage = config('pagination.per_page');
         $posts = $user->posts()->orderBy('created_at', 'desc')->paginate($perPage);
         $data['posts'] = $posts;
-        return view('user.dashboard', compact('user', 'data'));
+        return view('user.profile.dashboard', compact('user', 'data'));
     }
 
     public function edit(){
@@ -36,7 +36,7 @@ class UserController extends Controller
         }
         $user_id = $this->userSession->getUser()['user_id'];
         $user = $this->userService->findById($user_id);
-        return view('user.edit')->with('user', $user);
+        return view('user.profile.edit')->with('user', $user);
     }
 
     public function update(UserRequest $request){

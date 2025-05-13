@@ -1,18 +1,18 @@
 {{-- resources/views/posts/index.blade.php --}}
-@extends('layouts.app')
+@extends('user.layouts.app')
 @section('content')
     @php
         use Illuminate\Support\Str;
     @endphp
     <div class="section search-result-wrap">
         <div class="container">
-    @if(Str::startsWith(request()->path(), 'posts/category/'))
+    @if(Route::currentRouteName() === 'posts.showByCategoryId')
         <div class="row">
             <div class="col-12">
                 <div class="heading">Category: {{ $data['category_name'] }} </div>
             </div>
         </div>
-    @elseif(Str::startsWith(request()->path(), 'posts/search'))
+    @elseif(Route::currentRouteName() === 'posts.searchByTitle')
         <div class="row">
             <div class="col-12">
                 <div class="heading">Result: {{ $data['title'] }} </div>

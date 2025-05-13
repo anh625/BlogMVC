@@ -18,12 +18,6 @@ class PostController extends Controller
         $this->userSession = $userSession;
     }
 
-    public function index(){
-        return redirect()->route('posts.show');
-    }
-    //
-
-
     private function renderPostsView($data)
     {
         if ($data['posts']->isEmpty()) {
@@ -40,7 +34,7 @@ class PostController extends Controller
         }
         $data['categories'] = $this->postService->getAllCategories();
         $data['popularPosts'] = $this->postService->getPopularPosts(null);
-        return view('posts.show', compact('data'));
+        return view('user.posts.show', compact('data'));
     }
 
     public function show()
@@ -57,7 +51,7 @@ class PostController extends Controller
         }
         $data['categories'] = $this->postService->getAllCategories();
         $data['popularPosts'] = $this->postService->getPopularPosts($post_id);
-        return view('posts.showById', compact('data'));
+        return view('user.posts.showById', compact('data'));
     }
 
     public function showByUserId(string $user_id)
@@ -83,7 +77,7 @@ class PostController extends Controller
     public function showFormCreatePost()
     {
         $categories = $this->postService->getAllCategories();
-        return view('posts.create', compact('categories'));
+        return view('user.posts.create', compact('categories'));
     }
 
     public function store(PostRequest $request)
@@ -109,7 +103,7 @@ class PostController extends Controller
             $this->userSession->flash('error', "You don't have permission to edit this post");
             return redirect()->route('posts.show');
         };
-        return view('posts.edit', compact('post', 'categories'));
+        return view('user.posts.edit', compact('post', 'categories'));
     }
 
     public function update(PostRequest $request, int $post_id)

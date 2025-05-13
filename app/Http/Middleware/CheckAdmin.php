@@ -20,7 +20,7 @@ readonly class CheckAdmin
     public function handle(Request $request, Closure $next): Response
     {
         if (!$this->userSession->isAdmin()) {
-            return redirect('/log-in')->withErrors(['error' => 'Bạn cần đăng nhập với quyền Admin để tiếp tục!']);;
+            return redirect()->route('sign-in')->withErrors(['error' => 'Bạn cần đăng nhập với quyền Admin để tiếp tục!']);
         }
         return $next($request);
     }

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('user.layouts.app')
 @section('content')
     <div class="site-cover site-cover-sm same-height overlay single-page"
         style="background-image: url('{{ asset('storage/'.$data['post']->banner_image) }}');">
@@ -141,7 +141,11 @@
                             @foreach ($data['post']->comments as $cmt)
                                 <li class="comment">
                                     <div class="vcard">
-                                        <img src="{{ $cmt->user->avatar ?? asset('images/default_avatar.jpg') }}"
+                                        @php
+                                        $CmtAvatar = 'images/users/avatar/default.png';
+                                        if($cmt->user->user_image) $CmtAvatar = $cmt->user->user_image;
+                                        @endphp
+                                        <img src="{{asset('storage/'. $CmtAvatar) }}"
                                             alt="Avatar">
                                     </div>
                                     <div class="comment-body">

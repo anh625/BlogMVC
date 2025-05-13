@@ -1,5 +1,5 @@
 {{-- resources/views/posts/edit.blade.php --}}
-@extends('layouts.app')
+@extends('user.layouts.app')
 
 
 @section('content')
@@ -14,9 +14,10 @@
                 <input type="file" id="titleImg" class="form-control mb-2">
                 <div style="width: 300px; height: 300px;">
                     @if(isset($user) && $user->user_image)
-                        <img id="titleImgPreview" src="{{ asset('storage/' . $user->user_image) }}" style="max-width: 100%;" class="mb-2" alt="avatar"><br>
+                        <img id="titleImgPreview" src="{{ asset('storage/' . $user->user_image) }}"
+                             style="max-width: 100%;" class="mb-2" alt="avatar"><br>
                     @else
-                        <img id="titleImgPreview" style="max-width: 100%;" class="mb-2" >
+                        <img id="titleImgPreview" style="max-width: 100%;" class="mb-2">
                     @endif
                 </div>
             </div>
@@ -26,10 +27,12 @@
 
             <input type="hidden" name="avatar" id="cropped_image">
 
-            <input type="text" name="name" class="form-control mb-2" placeholder="Full name" value="{{ $user->name }}" required>
+            <input type="text" name="name" class="form-control mb-2" placeholder="Full name" value="{{ $user->name }}"
+                   required>
 
 
-            <input type="number" id="phone" name="phone_number" class="form-control mb-2" placeholder="Phone number" value="{{ $user->phone_number }}" required/>
+            <input type="number" id="phone" name="phone_number" class="form-control mb-2" placeholder="Phone number"
+                   value="{{ $user->phone_number }}" required/>
 
             <button type="submit" class="btn btn-primary mt-2">Edit</button>
             <a href="{{ route('user.index') }}" class="btn btn-secondary mt-2">Quit</a>

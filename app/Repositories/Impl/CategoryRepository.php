@@ -26,12 +26,21 @@ class CategoryRepository implements ICategoryRepository
 
     public function create(array $data)
     {
+        $exists = $this->model->where('category_name', $data['category_name'])->exists();
+        if ($exists) {
+            return null;
+        }
+
         return $this->model->create($data);
     }
 
     public function update($id, array $data)
     {
         $category = $this->findById($id);
+        $exists = $this->model->where('category_name', $data['category_name'])->exists();
+        if ($exists) {
+            return null; 
+        }
         $category->update($data);
         return $category;
     }

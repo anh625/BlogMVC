@@ -18,7 +18,6 @@ class CommentController extends Controller
 
     public function index()
     {
-        // dd(session('user'));
         $comments = $this->commentService->getAll();
         return view('admin.comments.index', compact('comments'));
     }

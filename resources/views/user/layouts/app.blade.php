@@ -69,12 +69,12 @@
 
 </head>
 <body>
-@include('layouts.partials.header')
+@include('user.layouts.partials.header')
 
         @yield('content')
 
-@include('layouts.partials.footer')
-@include('layouts.partials.preloader')
+@include('user.layouts.partials.footer')
+@include('user.layouts.partials.preloader')
 <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('js/tiny-slider.js') }}"></script>
 <script src="{{ asset('js/flatpickr.min.js') }}"></script>

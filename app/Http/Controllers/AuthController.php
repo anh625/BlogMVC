@@ -21,9 +21,10 @@ class AuthController extends Controller
         $this->userSession = $userSession;
     }
 
-    public function index(): View|Application|Factory
+    public function index()
     {
-        return view('welcome');
+        if($this->userSession->isAdmin()) return redirect()->route('admin.dashboard.index');
+        return redirect()->route('posts.show');
     }
 
     public function signin()
@@ -37,7 +38,7 @@ class AuthController extends Controller
     public function login(LoginRequest $request): RedirectResponse
     {
         if($this->userService->login($request)){
-            return redirect('/');
+            return redirect()->route('auth.index');
         };
         return back()
             ->withErrors(['error' => "Email hoặc Password không chính xác"])

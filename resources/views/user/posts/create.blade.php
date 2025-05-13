@@ -1,6 +1,6 @@
 {{-- resources/views/posts/create.blade.php--}}
 
-@extends('layouts.app')
+@extends('user.layouts.app')
 @section('content')
 
     <div class="container py-4">
@@ -10,7 +10,7 @@
 
             <form id="postForm" action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                @include('posts.form', ['post' => null])
+                @include('user.posts.form', ['post' => null])
                 <button type="submit" class="btn btn-success mt-2">Lưu</button>
                 <a href="{{ route('user.index') }}" class="btn btn-secondary mt-2">Quay lại</a>
             </form>

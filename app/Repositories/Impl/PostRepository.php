@@ -47,9 +47,11 @@ class PostRepository extends BaseRepository implements IPostRepository
 
     public function getCategoryWithPostCount(): ?Collection
     {
+        //dd($post);
         return Post::rightJoin('categories', 'posts.category_id', '=', 'categories.category_id') // sử dụng right join
-        ->select('categories.category_id', 'categories.category_name', DB::raw('COUNT(posts.post_id) as count_post')) // đếm số bài viết trong category
-        ->where('post_status', true)
+        ->select('categories.category_id',
+            'categories.category_name',
+            DB::raw("COUNT(CASE WHEN posts.post_status = 1 THEN posts.post_id ELSE NULL END) as count_post")) // đếm số bài viết trong category
         ->groupBy('categories.category_id', 'categories.category_name') // group theo category_id và category_name
         ->get()
             ->map(function ($post) {

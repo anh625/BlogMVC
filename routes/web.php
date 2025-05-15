@@ -23,7 +23,6 @@ Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('user/dashboard', [UserController::class,'index'])->name('user.index');
 Route::get('user/edit', [UserController::class,'edit'])->name('user.edit');
-Route::post('user/image', [UserController::class,'image'])->name('user.image');
 Route::put('user/update', [UserController::class,'update'])->name('user.update');
 
 

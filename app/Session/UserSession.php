@@ -9,7 +9,7 @@ class UserSession extends SessionManager{
 
     public function isAdmin(): bool{
         $sessionUser = session('user');
-        return $sessionUser && $sessionUser->role == 'admin';
+        return $sessionUser && $sessionUser->is_admin == 'admin';
     }
 
     public static function getUser()

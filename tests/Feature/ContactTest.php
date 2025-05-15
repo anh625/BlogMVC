@@ -1,18 +1,13 @@
 <?php
 
 namespace Tests\Feature;
-
-use App\Http\Controllers\ContactController;
-use App\Http\Requests\ContactRequest;
-use App\Models\Contact;
-use App\Services\Contracts\IContactService;
-use App\Session\UserSession;
-use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
 use Tests\TestCase;
 
-class ContactControllerTest extends TestCase
+class ContactTest extends TestCase
 {
+    use RefreshDatabase;
     public function test_store_success()
     {
         $response = $this->post(route('contact.store'), [
@@ -23,6 +18,7 @@ class ContactControllerTest extends TestCase
         ]);
         $response->assertStatus(302);
         $response->assertRedirect(route('posts.show'));
+        $response->assertSessionHas('success', 'Send contact successfully!');
     }
 
     public function test_store_defect_attribute()

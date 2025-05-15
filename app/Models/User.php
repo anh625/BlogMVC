@@ -11,6 +11,7 @@ class User extends Model
     //
     use HasFactory;
     protected $table = 'users';
+    public $incrementing = false;
     protected $primaryKey = 'user_id';
     protected $fillable = ['user_id','name', 'email', 'password','phone_number','user_image'];
     public function posts(): HasMany

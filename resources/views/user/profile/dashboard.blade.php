@@ -1,5 +1,14 @@
+<style>
+    .ratio-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+</style>
 @extends('user.layouts.app')
-
 @section('content')
     <div class="container py-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
@@ -12,11 +21,14 @@
             <div class="col-lg-8">
                 @if(is_object($data['posts']))
                     @foreach($data['posts'] as $p)
-                        <div class="blog-entry d-flex blog-entry-search-item">
-                            <a href="{{ asset(route('posts.showById', $p->post_id)) }}" class="img-link me-4">
-                                <img style="max-width: 230px; max-height: 230px; object-fit: contain;" src="{{ asset('storage/' . $p->image) }}" alt="Image" class="img-fluid">
+                        <div class="blog-entry d-flex blog-entry-search-item" style="min-height: 230px;">
+                            <a style="flex: 0 0 30%; max-width: 30%;"
+                               href="{{ asset(route('posts.showById', $p->post_id)) }}"
+                               class="img-link me-4">
+                                <img style="max-width: 230px; max-height: 230px; object-fit: contain;" src="{{ asset('storage/' . $p->image) }}" alt="Image"
+                                     class="img-fluid ratio-image">
                             </a>
-                            <div>
+                            <div >
                                 <span class="date">
                                     {{ $p->updated_at->format('M. jS, Y') }}
                                     &bullet; <a href="{{ route('posts.showByCategoryId', $p->category_id) }}">{{ $p->category->category_name }}</a>

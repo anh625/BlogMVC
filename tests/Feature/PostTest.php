@@ -39,8 +39,8 @@ class PostTest extends TestCase
             'title' => 'Old title',
             'description' => 'Old desc',
             'content' => 'Old content',
-            'image' => 'old_thumbnail.png',
-            'banner_image' => 'old_banner.png',
+            'image' => 'images/posts/thumbnail/thumb_1746187041.png',
+            'banner_image' => 'images/posts/banner/banner_1747110165.png',
             'user_id' => $user_id,
             'post_status' => true,
             'category_id' => $category_id,
@@ -55,10 +55,10 @@ class PostTest extends TestCase
         $this->createCategory();
         //dd($user);
         // Tạo chuỗi base64 hợp lệ
-        $imagePath = base_path('public\storage\images\posts\thumbnail\thumb_1746187041.png'); // Tạo một ảnh nhỏ ở đây nếu muốn
+        $imagePath = base_path('public/storage/images/posts/thumbnail/thumb_1746187041.png'); // Tạo một ảnh nhỏ ở đây nếu muốn
         $imageData = base64_encode(file_get_contents($imagePath));
         $tb = 'data:image/jpeg;base64,' . $imageData;
-        $imagePath1 = base_path('public\storage\images\posts\banner\banner_1747110165.png'); // Tạo một ảnh nhỏ ở đây nếu muốn
+        $imagePath1 = base_path('public/storage/images/posts/banner/banner_1747110165.png'); // Tạo một ảnh nhỏ ở đây nếu muốn
         $imageData1 = base64_encode(file_get_contents($imagePath1));
         $bn = 'data:image/jpeg;base64,' . $imageData1;
 
@@ -75,6 +75,18 @@ class PostTest extends TestCase
         ]);
         $response->assertStatus(302);
         $response->assertRedirect(route('user.index'));
+
+        $this->assertDatabaseHas('posts', [
+            'title' => 'test',
+            'description' => 'test',
+            'content' => 'test',
+            'category_id' => 1,
+        ]);
+        $post = $post = Post::where('title', 'test')->latest()->first();
+        $this->assertNotNull($post->image);
+        $this->assertNotNull($post->banner_image);
+        $this->assertStringStartsWith('images/posts/thumbnail/', $post->image);
+        $this->assertStringStartsWith('images/posts/banner/', $post->banner_image);
     }
 
     public function test_stored_without_login(): void
@@ -102,6 +114,13 @@ class PostTest extends TestCase
         $response->assertRedirect(route('sign-in'));
         $response->assertSessionHasErrors([
             'error' => 'Vui lòng đăng nhập để tiếp tục!'
+        ]);
+
+        $this->assertDatabaseMissing('posts', [
+            'title' => 'test',
+            'description' => 'test',
+            'content' => 'test',
+            'category_id' => 1,
         ]);
     }
 
@@ -132,9 +151,13 @@ class PostTest extends TestCase
         $response->assertRedirect(route('posts.create'));
         $response->assertSessionHasErrors(['title']);
 
-        // Nếu muốn kiểm tra cụ thể thông báo lỗi
         $errors = session('errors');
         $this->assertEquals('Title is required', $errors->first('title'));
+        $this->assertDatabaseMissing('posts', [
+            'description' => 'test',
+            'content' => 'test',
+            'category_id' => 1,
+        ]);
     }
 
     public function test_updated_success(): void
@@ -162,6 +185,19 @@ class PostTest extends TestCase
         ]);
         $response->assertStatus(302);
         $response->assertRedirect(route('user.index'));
+
+        $this->assertDatabaseHas('posts', [
+            'title' => 'test',
+            'description' => 'test',
+            'content' => 'test',
+            'category_id' => 1,
+            'post_status' => true,
+        ]);
+        $post = $post = Post::where('title', 'test')->latest()->first();
+        $this->assertNotNull($post->image);
+        $this->assertNotNull($post->banner_image);
+        $this->assertStringStartsWith('images/posts/thumbnail/', $post->image);
+        $this->assertStringStartsWith('images/posts/banner/', $post->banner_image);
     }
 
     public function test_updated_without_image(): void
@@ -187,6 +223,19 @@ class PostTest extends TestCase
         ]);
         $response->assertStatus(302);
         $response->assertRedirect(route('user.index'));
+
+        $this->assertDatabaseHas('posts', [
+            'title' => 'test',
+            'description' => 'test',
+            'content' => 'test',
+            'category_id' => 1,
+            'post_status' => true,
+        ]);
+        $post = Post::where('title', 'test')->latest()->first();
+        $this->assertNotNull($post->image);
+        $this->assertNotNull($post->banner_image);
+        $this->assertStringStartsWith('images/posts/thumbnail/', $post->image);
+        $this->assertStringStartsWith('images/posts/banner/', $post->banner_image);
     }
 
     public function test_updated_defect_attribute_without_image(): void
@@ -212,6 +261,13 @@ class PostTest extends TestCase
         ]);
         $response->assertStatus(302);
         $response->assertRedirect(route('posts.edit',1));
+
+        $this->assertDatabaseMissing('posts', [
+            'title' => 'test',
+            'description' => 'test',
+            'category_id' => 1,
+            'post_status' => true,
+        ]);
     }
 
     public function test_deleted_success(): void
@@ -226,11 +282,18 @@ class PostTest extends TestCase
         $imagePath1 = base_path('public\storage\images\posts\banner\banner_1747110165.png'); // Tạo một ảnh nhỏ ở đây nếu muốn
         $imageData1 = base64_encode(file_get_contents($imagePath1));
         $bn = 'data:image/jpeg;base64,' . $imageData1;
+        $this->assertDatabaseHas('posts', [
+            'post_id' => 1
+        ]);
 
         $response = $this->withSession(['user' => $user]) // nếu bạn dùng session('user') trong controller
         ->delete(route('posts.destroy', 1));
         $response->assertStatus(302);
         $response->assertRedirect(route('user.index'));
+
+        $this->assertDatabaseMissing('posts', [
+            'post_id' => 1
+        ]);
     }
 
     protected function tearDown(): void

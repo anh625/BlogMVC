@@ -34,11 +34,12 @@ class AuthController extends Controller
 
     public function login(LoginRequest $request): RedirectResponse
     {
-        if($this->userService->login($request)){
+        $data = $this->userService->login($request);
+        if($data['status'] === 'success'){
             return redirect()->route('auth.index');
-        };
+        }
         return back()
-            ->withErrors(['error' => "Email or password is incorrect"])
+            ->withErrors(['error' => $data['message']])
             ->withInput();
     }
 

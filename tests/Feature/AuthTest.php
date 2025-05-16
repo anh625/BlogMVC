@@ -41,6 +41,13 @@ class AuthTest extends TestCase
         $response->assertStatus(302);
         $response->assertRedirect(route('sign-in'));
         $response->assertSessionHas(['success' => 'Registered successfully']);
+
+        $this->assertDatabaseHas('users', [
+            'email' => 'test@test.com',
+            'password' => 'password',
+            'name' => 'Test User',
+            'phone_number' => '0123456789',
+        ]);
     }
 
     public function test_register_error_password_confirmation(): void
@@ -58,6 +65,13 @@ class AuthTest extends TestCase
         $response->assertStatus(302);
         $response->assertRedirect(route('sign-up'));
         $response->assertSessionHasErrors(['password' => 'Confirmation password does not match']);
+
+        $this->assertDatabaseMissing('users', [
+            'email' => 'test@test.com',
+            'password' => 'password',
+            'name' => 'Test User',
+            'phone_number' => '0123456789',
+        ]);
     }
 
     public function test_register_defect_attribute(): void
@@ -74,6 +88,12 @@ class AuthTest extends TestCase
         $response->assertStatus(302);
         $response->assertRedirect(route('sign-up'));
         $response->assertSessionHasErrors(['name' => 'Name required']);
+
+        $this->assertDatabaseMissing('users', [
+            'email' => 'test@test.com',
+            'password' => 'password',
+            'phone_number' => '0123456789',
+        ]);
     }
 
     public function test_register_invalid_format(): void
@@ -91,11 +111,18 @@ class AuthTest extends TestCase
         $response->assertStatus(302);
         $response->assertRedirect(route('sign-up'));
         $response->assertSessionHasErrors(['email' => 'Invalid email format']);
+
+        $this->assertDatabaseMissing('users', [
+            'email' => 'test.test.com',
+            'password' => 'password',
+            'name' => 'Test User',
+            'phone_number' => '0123456789',
+        ]);
     }
 
     public function test_login_success(): void
     {
-        $this->createUser('user');
+        $user = $this->createUser('user');
         $response = $this->withHeaders(['referer' => route('sign-in')])
             ->post(route('login'), [
                 'email' => 'ngovietanh2003thtb@gmail.com',
@@ -103,6 +130,10 @@ class AuthTest extends TestCase
             ]);
         $response->assertStatus(302);
         $response->assertRedirect(route('auth.index'));
+        $response->assertSessionHas(['user']);
+        $this->assertEquals($user->user_id, session('user')->user_id);
+        $this->assertEquals($user->email, session('user')->email);
+        $this->assertEquals($user->password, session('user')->password);
     }
 
     public function test_login_defect_attribute(): void
@@ -115,6 +146,7 @@ class AuthTest extends TestCase
         $response->assertStatus(302);
         $response->assertRedirect(route('sign-in'));
         $response->assertSessionHasErrors(['password' => 'Password required']);
+        $response->assertSessionMissing('user');
     }
 
     public function test_login_invalid_format():void
@@ -128,6 +160,7 @@ class AuthTest extends TestCase
         $response->assertStatus(302);
         $response->assertRedirect(route('sign-in'));
         $response->assertSessionHasErrors(['email' => 'The email field must be a valid email address.']);
+        $response->assertSessionMissing('user');
     }
 
     public function test_login_invalid_password():void
@@ -141,6 +174,7 @@ class AuthTest extends TestCase
         $response->assertStatus(302);
         $response->assertRedirect(route('sign-in'));
         $response->assertSessionHasErrors(['error' => 'Email or password is incorrect']);
+        $response->assertSessionMissing('user');
     }
 
     public function test_admin_role_login()
@@ -149,6 +183,8 @@ class AuthTest extends TestCase
         $response = $this->withSession(['user' => $user])->get(route('auth.index'));
         $response->assertStatus(302);
         $response->assertRedirect(route('admin.dashboard.index'));
+        $response->assertSessionHas('user');
+        $this->assertEquals('admin', session('user')->is_admin);
     }
 
     public function test_user_role_login()
@@ -157,6 +193,8 @@ class AuthTest extends TestCase
         $response = $this->withSession(['user' => $user])->get(route('auth.index'));
         $response->assertStatus(302);
         $response->assertRedirect(route('posts.show'));
+        $response->assertSessionHas('user');
+        $this->assertEquals('user', session('user')->is_admin);
     }
 
     public function test_user_role_access_admin_dashboard()
@@ -181,6 +219,7 @@ class AuthTest extends TestCase
         $response = $this->withSession(['user' => $user])->get(route('logout'));
         $response->assertStatus(302);
         $response->assertRedirect(route('sign-in'));
+        $response->assertSessionMissing('user');
     }
 
     protected function tearDown(): void

@@ -28,7 +28,7 @@ public function register(UserRequest $request): ?User;
 * @param LoginRequest $request The login request containing user credentials.
 * @return User|null The logged-in user or null if authentication fails.
 */
-public function login(LoginRequest $request): ?User;
+public function login(LoginRequest $request): ?array;
 
 /**
 * Log out the current user and clear the session.

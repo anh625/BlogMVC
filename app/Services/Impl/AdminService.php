@@ -56,36 +56,7 @@ class AdminService implements IAdminService
             return null;  // User already exists
         }
 
-        // Set default role and admin status if not provided
-        $data['role'] = $data['role'] ?? 'user';
-        $data['is_admin'] = $data['is_admin'] ?? false;
-
         return $this->repository->store($data);
-    }
-
-    /**
-     * Update an existing user's details.
-     *
-     * @param string $userId The user's ID.
-     * @param array $data The data to update.
-     * @return User|null The updated user or null if the user is not found.
-     */
-    public function updateUser(string $userId, array $data): ?User
-    {
-        // Find the user by ID
-        $user = $this->repository->getById($userId);
-        if (!$user) {
-            return null;
-        }
-
-        // Update fields only if they are provided
-        if (isset($data['user_password'])) {
-            $data['user_password'] = Hash::make($data['user_password']);
-        }
-
-        // Update user and save changes
-        $user->update($data);
-        return $user;
     }
 
     /**
@@ -94,17 +65,14 @@ class AdminService implements IAdminService
      * @param string $userId The user's ID.
      * @return User|null The deleted user or null if the user is not found.
      */
-    public function deleteUser(string $userId): ?User
+    public function updateStatusUser(string $userId, bool $status): ?User
     {
         // Find the user by ID
         $user = $this->repository->getById($userId);
         if (!$user) {
             return null;
         }
-
-        // Delete the user
-        $user->delete();
-        return $user;
+        return $this->repository->update(['is_active'=>$status], $userId);
     }
 
     /**
@@ -117,7 +85,7 @@ class AdminService implements IAdminService
     public function updateUserRole(string $userId, string $role): ?User
     {
         // Ensure only valid roles are allowed
-        $validRoles = ['admin', 'user', 'editor'];
+        $validRoles = ['admin', 'user'];
         if (!in_array($role, $validRoles)) {
             return null;  // Invalid role
         }

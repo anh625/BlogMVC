@@ -2,7 +2,7 @@
 @section('title', 'Danh sách bài viết')
 
 @section('content')
-    <div class="container mt-5">
+    <div class="container">
         <div class="card shadow-sm">
             <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">Danh sách bài viết</h5>

@@ -43,6 +43,7 @@ Route::get('user/posts/{id}', [PostController::class, 'showById'])->name('posts.
 
 
 Route::get('/admin/posts', [PostController::class, 'index'])->name('posts.show');
+Route::put('/posts/{id}', [PostController::class, 'updateStatus'])->name('posts.updateStatus')->withoutMiddleware('admin');
 
 //Route Dashboard
 Route::middleware(['admin'])->group(function () {

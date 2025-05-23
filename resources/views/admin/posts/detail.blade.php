@@ -6,17 +6,10 @@
 <div class="container mt-5">
     <div class="card shadow">
         <div class="card-header bg-primary text-white">
-            <h4 class="mb-0">{{ $post->title }}</h4>
+            <h4 class="mb-0"><strong>Tiêu đề:</strong> {{ $post->title }}</h4>
         </div>
 
         <div class="card-body">
-            <div class="mb-3">
-                <strong>Mã bài viết:</strong> {{ $post->post_id }}
-            </div>
-
-            <div class="mb-3">
-                <strong>Tiêu đề:</strong> {{ $post->title }}
-            </div>
 
             <div class="mb-3">
                 <strong>Mô tả ngắn:</strong><br>

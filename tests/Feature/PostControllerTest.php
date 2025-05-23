@@ -21,23 +21,23 @@ class PostControllerTest extends TestCase
     public function test_stored_success(): void
     {
         $user = new User([
-            'user_id' => '5a5b2dab-8466-475b-aea7-6f76c9dece34',
-            'email' => 'ngovietanh2003thtb@gmail.com',
+            'user_id' => '5a5aaea3-3dea-414b-9246-80896cedcb90',
+            'email' => 'user@gmail.com',
             'password' => '1',
             'name' => 'Ngô Việt Anh',
             'phone' => '0961361582',
-        ]); // giả lập user đăng nhập (hoặc new User([...]) nếu bạn không dùng factory)
+        ]);
 
         // Tạo chuỗi base64 hợp lệ
-        $imagePath = base_path('public\storage\images\posts\thumbnail\thumb_1746187041.png'); // Tạo một ảnh nhỏ ở đây nếu muốn
+        $imagePath = base_path('public\storage\images\posts\thumbnail\thumb_1747106893.png');
         $imageData = base64_encode(file_get_contents($imagePath));
         $tb = 'data:image/jpeg;base64,' . $imageData;
 
-        $imagePath1 = base_path('public\storage\images\posts\banner\banner_1747110165.png'); // Tạo một ảnh nhỏ ở đây nếu muốn
+        $imagePath1 = base_path('public\storage\images\posts\banner\banner_1747106893.png');
         $imageData1 = base64_encode(file_get_contents($imagePath1));
         $bn = 'data:image/jpeg;base64,' . $imageData1;
 
-        $response = $this->withSession(['user' => $user]) // nếu bạn dùng session('user') trong controller
+        $response = $this->withSession(['user' => $user])
         ->post(route('posts.store'), [
             'title' => 'test',
             'description' => 'test',
@@ -53,11 +53,11 @@ class PostControllerTest extends TestCase
     public function test_stored_without_login(): void
     {
         // Tạo chuỗi base64 hợp lệ
-        $imagePath = base_path('public\storage\images\posts\thumbnail\thumb_1746187041.png'); // Tạo một ảnh nhỏ ở đây nếu muốn
+        $imagePath = base_path('public\storage\images\posts\thumbnail\thumb_1747106893.png'); // Tạo một ảnh nhỏ ở đây nếu muốn
         $imageData = base64_encode(file_get_contents($imagePath));
         $tb = 'data:image/jpeg;base64,' . $imageData;
 
-        $imagePath1 = base_path('public\storage\images\posts\banner\banner_1747110165.png'); // Tạo một ảnh nhỏ ở đây nếu muốn
+        $imagePath1 = base_path('public\storage\images\posts\banner\banner_1747106893.png'); // Tạo một ảnh nhỏ ở đây nếu muốn
         $imageData1 = base64_encode(file_get_contents($imagePath1));
         $bn = 'data:image/jpeg;base64,' . $imageData1;
 

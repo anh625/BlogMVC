@@ -56,6 +56,9 @@ class PostController extends Controller
 
     public function showByUserId(string $user_id)
     {
+        if($this->userSession->isUserUsing($user_id)){
+            return redirect()->route('user.index');
+        }
         $data = $this->postService->searchByUserId($user_id);
         return $this->renderPostsView($data);
     }

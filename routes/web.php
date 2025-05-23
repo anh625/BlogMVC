@@ -23,7 +23,6 @@ Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('user/dashboard', [UserController::class,'index'])->name('user.index');
 Route::get('user/edit', [UserController::class,'edit'])->name('user.edit');
-Route::post('user/image', [UserController::class,'image'])->name('user.image');
 Route::put('user/update', [UserController::class,'update'])->name('user.update');
 
 
@@ -32,6 +31,7 @@ Route::get('/', [AuthController::class,'index'])->name('auth.index');
 Route::get('user/posts', [PostController::class, 'show'])->name('posts.show');
 Route::get('user/posts/category/{category_id}', [PostController::class, 'showByCategoryId'])->name('posts.showByCategoryId');
 Route::get('user/posts/search/', [PostController::class, 'showByTitle'])->name('posts.searchByTitle');
+Route::get('user/posts/{id}/post/', [PostController::class, 'showByUserId'])->name('posts.showByUserId');
 Route::middleware(['user'])->group(function () {
     Route::get('user/posts/create', [PostController::class, 'showFormCreatePost'])->name('posts.create');
     Route::post('user/posts/store', [PostController::class, 'store'])->name('posts.store');

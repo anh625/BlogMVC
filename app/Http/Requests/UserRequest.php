@@ -40,16 +40,16 @@ class UserRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'email.required' => 'Vui lòng nhập email.',
-            'email.email' => 'Email không đúng định dạng.',
+            'email.required' => 'Email required',
+            'email.email' => 'Invalid email format',
 
-            'password.required' => 'Vui lòng nhập mật khẩu.',
-            'password.confirmed' => 'Xác nhận mật khẩu không khớp.',
+            'password.required' => 'Password required',
+            'password.confirmed' => 'Confirmation password does not match',
 
-            'name.required' => 'Vui lòng nhập tên.',
+            'name.required' => 'Name required',
 
-            'phone_number.required' => 'Vui lòng nhập số điện thoại.',
-            'avatar.regex' => 'Định dạng ảnh không hợp lệ. Vui lòng tải lên ảnh hợp lệ (jpeg, png, jpg, gif, svg).',
+            'phone_number.required' => 'Phone number required',
+            'avatar.regex' => 'Invalid banner image format. Please upload a valid image (JPEG, PNG, JPG, GIF, or SVG).',
         ];
     }
 }

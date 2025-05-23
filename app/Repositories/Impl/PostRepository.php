@@ -17,10 +17,22 @@ class PostRepository extends BaseRepository implements IPostRepository
         // Gọi constructor của BaseRepository và truyền vào model User
         parent::__construct(new Post());
     }
+    public function getById(int|string $id): Post
+    {
+        return Post::with(['category', 'user', 'comments.user'])
+            ->where('post_id', $id)
+            ->where('post_status', true)
+            ->whereHas('user', function ($query) {
+                $query->where('is_active', true);
+            })->firstOrFail();
+    }
     public function show(): LengthAwarePaginator
     {
         return Post::with('category')
             ->where('post_status', true)
+            ->whereHas('user', function ($query) {
+                $query->where('is_active', true);
+            })
             ->paginate($this->perPage);
     }
 
@@ -32,24 +44,40 @@ class PostRepository extends BaseRepository implements IPostRepository
 
     public function getByTitle(string $title): ?LengthAwarePaginator
     {
-        return Post::where('title', 'like', '%' . $title . '%')->where('post_status', true)->paginate($this->perPage);
+        return Post::where('title', 'like', '%' . $title . '%')
+            ->where('post_status', true)
+            ->whereHas('user', function ($query) {
+                $query->where('is_active', true);
+            })->paginate($this->perPage);
     }
 
     public function getByUserId(string $user_id): ?LengthAwarePaginator
     {
-        return Post::where('user_id', $user_id)->paginate($this->perPage);
+        return Post::where('user_id', $user_id)
+            ->whereHas('user', function ($query) {
+                $query->where('is_active', true);
+            })->paginate($this->perPage);
     }
 
     public function getByCategoryId(int $category_id): ?LengthAwarePaginator
     {
-        return Post::where('category_id', $category_id)->where('post_status', true)->paginate($this->perPage);
+        return Post::where('category_id', $category_id)
+            ->whereHas('user', function ($query) {
+                $query->where('is_active', true);
+            })->where('post_status', true)->paginate($this->perPage);
     }
 
     public function getCategoryWithPostCount(): ?Collection
     {
+        //dd($post);
         return Post::rightJoin('categories', 'posts.category_id', '=', 'categories.category_id') // sử dụng right join
-        ->select('categories.category_id', 'categories.category_name', DB::raw('COUNT(posts.post_id) as count_post')) // đếm số bài viết trong category
-        ->where('post_status', true)
+        ->leftJoin('users', 'posts.user_id', '=', 'users.user_id')
+        ->select('categories.category_id',
+            'categories.category_name',
+            DB::raw("COUNT(CASE
+                WHEN posts.post_status = 1 AND users.is_active = 1
+                THEN posts.post_id ELSE NULL
+            END) as count_post")) // đếm số bài viết trong category
         ->groupBy('categories.category_id', 'categories.category_name') // group theo category_id và category_name
         ->get()
             ->map(function ($post) {
@@ -64,13 +92,17 @@ class PostRepository extends BaseRepository implements IPostRepository
     public function incrementView(int $id)
     {
         return Post::where($this->primaryKey, $id)
-            ->increment('view_counts', 1);
+            ->whereHas('user', function ($query) {
+                $query->where('is_active', true);
+            })->increment('view_counts', 1);
     }
 
     public function getPopularPosts(int|null $id = null){
         $query = $this->model
             ->where('post_status', true)
-            ->orderBy('view_counts', 'desc');
+            ->whereHas('user', function ($query) {
+                $query->where('is_active', true);
+            })->orderBy('view_counts', 'desc');
 
         if (!is_null($id)) {
             $query->where($this->primaryKey, '!=', $id);

@@ -34,15 +34,22 @@ class AuthService implements IAuthService
         return $this->repository->store($data);
     }
 
-    public function login(LoginRequest $request): ?User
+    public function login(LoginRequest $request): ?array
     {
         $user = $this->repository->getByEmail($request->get('email'));
-
-        if($user && $user->password == $request->get('password')) {
-            $this->userSession->setUser($user);
-            return $user;
+        $data['status'] = 'success';
+        if($user && $user->is_active == false) {
+            $data['status'] = 'error';
+            $data['message'] = 'Your account has been deactivated.';
+            return $data;
         }
-        return null;
+        if(!$user || $user->password != $request->get('password')) {
+            $data['status'] = 'error';
+            $data['message'] = 'Email or password is incorrect.';
+            return $data;
+        }
+        $this->userSession->setUser($user);
+        return $data;
     }
 
     public function logout(): void

@@ -16,19 +16,19 @@ class PostService implements IPostService
 {
     private IPostRepository $postRepository;
     private ICategoryRepository $categoryRepository;
-    //private IUserRepository $userRepository;
+    private IUserRepository $userRepository;
     private PostDataMapper $postDataMapper;
     private UserSession $userSession;
 
     public function __construct(IPostRepository $postRepository,
                                 ICategoryRepository $categoryRepository,
-                                //IUserRepository $userRepository,
+                                IUserRepository $userRepository,
                                 PostDataMapper $postDataMapper,
                                 UserSession $userSession)
     {
         $this->postRepository = $postRepository;
         $this->categoryRepository = $categoryRepository;
-        //->userRepository = $userRepository;
+        $this->userRepository = $userRepository;
         $this->postDataMapper = $postDataMapper;
         $this->userSession = $userSession;
     }
@@ -69,6 +69,7 @@ class PostService implements IPostService
     public function searchByUserId(string $user_id) : ?array
     {
         $data['posts'] = $this->postRepository->getByUserId($user_id);
+        $data['user_name'] = $this->userRepository->getById($user_id)->name;
         return $data;
     }
     public function searchByCategoryId(int $category_id) : ?array

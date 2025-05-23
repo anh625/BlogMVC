@@ -33,7 +33,6 @@ class UserDataMapper{
 
     public function mapForEdit (UserRequest $request): array{
         $data = $this->getData($request);
-        $data['user_id'] = $request->get('id');
         if(!$data['user_image']){
             unset($data['user_image']);
         }

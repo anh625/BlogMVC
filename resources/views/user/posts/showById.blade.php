@@ -12,7 +12,9 @@
                                 $avatar = 'images/users/avatar/default.png';
                                 if($data['post']->user->user_image) $avatar = $data['post']->user->user_image;
                             @endphp
+                            <a href="{{ route('posts.showByUserId',$data['post']->user_id) }}">
                             <figure class="author-figure mb-0 me-3 d-inline-block"><img src="{{ asset('storage/'.$avatar) }}" alt="Image" class="img-fluid"></figure>
+                            </a>
                             <span class="d-inline-block mt-1">By {{ $data['post']->user->name }}</span>
                             <span>&nbsp;-&nbsp; {{ $data['post']->updated_at->format('F j, Y') }}</span>
                         </div>
@@ -139,6 +141,7 @@
                         </ul> --}}
                         <ul class="comment-list">
                             @foreach ($data['post']->comments as $cmt)
+                                @if($cmt->user->is_active != null)
                                 <li class="comment">
                                     <div class="vcard">
                                         @php
@@ -155,6 +158,7 @@
                                         {{-- <p><a href="#" class="reply rounded">Reply</a></p> --}}
                                     </div>
                                 </li>
+                                @endif
                             @endforeach
                         </ul>
 

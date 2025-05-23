@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string('name',255);
             $table->string('phone_number',13);
             $table->string('user_image',255)->nullable();
-            $table->enum('role',['admin','user'])->default('user');
+            $table->enum('is_admin',['admin','user'])->default('user');
+            $table->boolean('is_active')->default(1);
             $table->timestamps();
         });
     }

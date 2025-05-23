@@ -6,9 +6,6 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\UserRequest;
 use App\Services\Contracts\IAuthService;
 use App\Session\UserSession;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
-use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 
 class AuthController extends Controller
@@ -37,11 +34,12 @@ class AuthController extends Controller
 
     public function login(LoginRequest $request): RedirectResponse
     {
-        if($this->userService->login($request)){
+        $data = $this->userService->login($request);
+        if($data['status'] === 'success'){
             return redirect()->route('auth.index');
-        };
+        }
         return back()
-            ->withErrors(['error' => "Email hoặc Password không chính xác"])
+            ->withErrors(['error' => $data['message']])
             ->withInput();
     }
 
@@ -57,11 +55,11 @@ class AuthController extends Controller
     {
         $user = $this->userService->register($request);
         if($user){
-            $this->userSession->flash('success','Đăng ký thành công');
-            return redirect('/login');
+            $this->userSession->flash('success','Registered successfully');
+            return redirect()->route('sign-in');
         }
         return back()
-            ->withErrors(['error' => 'Email đã tồn tại!'])
+            ->withErrors(['error' => 'Email existed!'])
             ->withInput();
     }
 

@@ -4,6 +4,7 @@ namespace App\Services\Contracts;
 
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
+use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 
@@ -26,4 +27,5 @@ interface IPostService
     public function getAllCategories() : ?Collection ;
     public function getPopularPosts(int|null $id) ;
     public function getById(int $id);
+    public function searchPosts(Request $request, int $perPage = 10) : LengthAwarePaginator;
 }

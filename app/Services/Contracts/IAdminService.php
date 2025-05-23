@@ -3,6 +3,7 @@
 namespace App\Services\Contracts;
 
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 /**
@@ -17,4 +18,5 @@ interface IAdminService
     public function createUser(array $data): ?User;
     public function updateStatusUser(string $userId, bool $status): ?User;
     public function updateUserRole(string $userId, string $role): ?User;
+    public function searchUsers(Request $request, int $perPage = 10): LengthAwarePaginator;
 }

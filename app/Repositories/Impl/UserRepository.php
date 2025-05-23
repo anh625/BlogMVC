@@ -4,6 +4,7 @@ namespace App\Repositories\Impl;
 use App\Models\User;
 use App\Repositories\Contracts\IUserRepository;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 class UserRepository extends BaseRepository implements IUserRepository
 {
@@ -23,6 +24,15 @@ class UserRepository extends BaseRepository implements IUserRepository
     public function getByEmail(string $email): ?User
     {
         return User::where('email', $email)->first();
+    }
+
+    public function search(array $filters = [],int $perPage = 10): LengthAwarePaginator
+    {
+        return User::with('posts') // quan hệ user phải được khai báo trong model Post
+            ->when(!empty($filters['name']), fn($q) => $q->where('name', 'like', '%' . $filters['name'] . '%'))
+            ->when(!empty($filters['email']), fn($q) => $q->where('email', 'like', '%' . $filters['email'] . '%'))
+            ->when(isset($filters['is_active']), fn($q) => $q->where('is_active', $filters['is_active']))
+            ->paginate($perPage);
     }
 
 }

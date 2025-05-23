@@ -48,6 +48,8 @@ Route::get('/admin/posts', [PostController::class, 'index'])->name('posts.show')
 Route::middleware(['admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard.index');
     Route::get('/admin/posts', [AdminController::class, 'posts'])->name('admin.posts.index');
+    Route::get('/admin/posts/search', [AdminController::class, 'searchPosts'])->name('admin.posts.search');
+    Route::get('/admin/users/search', [AdminController::class, 'searchUsers'])->name('admin.users.search');
 });
 
 

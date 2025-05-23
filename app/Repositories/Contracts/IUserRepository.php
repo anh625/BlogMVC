@@ -27,4 +27,5 @@ interface IUserRepository extends IBaseRepository
      * @return User|null The User object or null if not found.
      */
     public function getByEmail(string $email): ?User;
+    public function search(array $filters = [],int $perPage = 10): LengthAwarePaginator;
 }

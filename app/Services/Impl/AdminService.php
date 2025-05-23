@@ -5,6 +5,7 @@ namespace App\Services\Impl;
 use App\Models\User;
 use App\Repositories\Contracts\IUserRepository;
 use App\Services\Contracts\IAdminService;
+use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Hash;
 
@@ -100,5 +101,20 @@ class AdminService implements IAdminService
         $user->role = $role;
         $user->save();
         return $user;
+    }
+
+    public function searchUsers(Request $request, int $perPage = 10): LengthAwarePaginator
+    {
+        $data=[];
+        if($request->input('name') != ''){
+            $data['name'] = $request->input('name');
+        }
+        if($request->input('email') != ''){
+            $data['email'] = $request->input('email');
+        }
+        if($request->input('is_active') != ''){
+            $data['is_active'] = $request->input('is_active');
+        }
+        return $this->repository->search($data);
     }
 }

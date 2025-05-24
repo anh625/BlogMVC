@@ -117,11 +117,8 @@ class AdminService implements IAdminService
     public function searchUsers(Request $request, int $perPage = 10): LengthAwarePaginator
     {
         $data=[];
-        if($request->input('name') != ''){
-            $data['name'] = $request->input('name');
-        }
-        if($request->input('email') != ''){
-            $data['email'] = $request->input('email');
+        if($request->input('key_word') != ''){
+            $data['key_word'] = $request->input('key_word');
         }
         if($request->input('is_active') != ''){
             $data['is_active'] = $request->input('is_active');

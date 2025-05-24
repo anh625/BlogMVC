@@ -28,9 +28,9 @@ class AdminController extends Controller
     }
 
     public function posts()
-    {
+    {   $perPage = 10;
         $categories = $this->categoryService->getAll();
-        $posts = $this->postService->showForAdmin();
+        $posts = $this->postService->showForAdmin($perPage);
         return view('admin.posts.index', compact('posts', 'categories'))->with('currentTitle', 'Danh sách bài viết');
     }
 
@@ -76,11 +76,12 @@ class AdminController extends Controller
     // đây là hàm xử lý rồi trả về kết quả. chưa trả về giao diện nào cả!!!
     public function searchPosts(Request $request){
          $posts = 'Not found';
+         $categories = $this->categoryService->getAll();
          if($this->postService->searchPosts($request)){
              $posts = $this->postService->searchPosts($request);
          }
-         dd($posts);
-         return view('admin.posts.index', compact('posts'));
+        //  dd($posts);
+         return view('admin.posts.index', compact('posts', 'categories'));
     }
 
     // đây là hàm xử lý rồi trả về kết quả. chưa trả về giao diện nào cả!!!
@@ -89,7 +90,7 @@ class AdminController extends Controller
          if($this->adminService->searchUsers($request)){
              $users = $this->adminService->searchUsers($request);
          }
-         dd($users);
-        return view('admin.posts.index', compact('posts'));
+        //  dd($users);
+        return view('admin.users.index', compact('users'));
     }
 }

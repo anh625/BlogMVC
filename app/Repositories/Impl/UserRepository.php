@@ -18,7 +18,7 @@ class UserRepository extends BaseRepository implements IUserRepository
     }
     public function show(): LengthAwarePaginator
     {
-        return User::paginate($this->perPage);
+        return User::where('is_admin' , 'user')->paginate($this->perPage);
     }
 
     public function getByEmail(string $email): ?User
@@ -29,8 +29,13 @@ class UserRepository extends BaseRepository implements IUserRepository
     public function search(array $filters = [],int $perPage = 10): LengthAwarePaginator
     {
         return User::with('posts') // quan hệ user phải được khai báo trong model Post
-            ->when(!empty($filters['name']), fn($q) => $q->where('name', 'like', '%' . $filters['name'] . '%'))
-            ->when(!empty($filters['email']), fn($q) => $q->where('email', 'like', '%' . $filters['email'] . '%'))
+            ->when(!empty($filters['key_word']), function ($q) use ($filters) {
+                $keyword = $filters['key_word'];
+                $q->where(function ($query) use ($keyword) {
+                    $query->where('name', 'like', '%' . $keyword . '%')
+                        ->orWhere('email', 'like', '%' . $keyword . '%');
+                });
+            })
             ->when(isset($filters['is_active']), fn($q) => $q->where('is_active', $filters['is_active']))
             ->paginate($perPage);
     }

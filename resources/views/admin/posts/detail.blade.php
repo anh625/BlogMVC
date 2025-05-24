@@ -74,4 +74,7 @@
         </div>
     </div>
 </div>
+<div class="mt-3">
+    {{ $users->appends(request()->query())->links('pagination::bootstrap-5') }}
+</div>
 @endsection

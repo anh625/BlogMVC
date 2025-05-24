@@ -45,21 +45,6 @@
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
-
-                {{-- <div class="mb-3">
-                    <label for="category_slug" class="form-label">Slug</label>
-                    <input
-                        type="text"
-                        name="category_slug"
-                        id="category_slug"
-                        class="form-control @error('category_slug') is-invalid @enderror"
-                        value="{{ old('category_slug', $category->category_slug) }}"
-                    >
-                    @error('category_slug')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div> --}}
-
                 <div class="d-flex justify-content-end">
                     <button type="submit" class="btn btn-success me-2">Cập nhật</button>
                     <a href="{{ route('admin.categories.index') }}" class="btn btn-secondary">Hủy</a>

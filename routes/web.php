@@ -45,15 +45,16 @@ Route::get('user/posts/{id}', [PostController::class, 'showById'])->name('posts.
 Route::get('/admin/posts', [PostController::class, 'index'])->name('posts.show');
 Route::put('/posts/{id}', [PostController::class, 'updateStatus'])->name('posts.updateStatus')->withoutMiddleware('admin');
 
-//Route Dashboard
+//Route Admin
 Route::middleware(['admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard.index');
     Route::get('/admin/posts', [AdminController::class, 'posts'])->name('admin.posts.index');
-    Route::get('/admin/posts/{id}', [AdminController::class, 'detailpost'])->name('admin.posts.detail');
     Route::get('/admin/users', [AdminController::class, 'getAllUsers'])->name('admin.users.index');
-    Route::post('/admin/users/{id}', [AdminController::class, 'updateUserStatus'])->name('admin.users.updateUserStatus');
     Route::get('/admin/posts/search', [AdminController::class, 'searchPosts'])->name('admin.posts.search');
     Route::get('/admin/users/search', [AdminController::class, 'searchUsers'])->name('admin.users.search');
+    Route::get('/admin/posts/{id}', [AdminController::class, 'detailpost'])->name('admin.posts.detail');
+    Route::post('/admin/users/{id}', [AdminController::class, 'updateUserStatus'])->name('admin.users.updateUserStatus');
+
 });
 
 
@@ -75,16 +76,9 @@ Route::middleware(['user'])->group(function () {
     Route::post('/posts/{id}', [CommentController::class, 'store'])->name('comments.store');
     Route::delete('/comments/{id}', [CommentController::class, 'destroy'])->name('comments.destroy');
     // Route::get('/posts/{id}', [CommentController::class, 'getCommentsByPostId'])->name('comments.getCommentsByPostId');
-
     // Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
 });
 
-// Chỉ admin mới được sửa hoặc xóa bình luận
-// Route::middleware(['admin'])->group(function () {
-    // Route::get('/comments/{id}/edit', [CommentController::class, 'edit'])->name('comments.edit');
-    // Route::put('/comments/{id}', [CommentController::class, 'update'])->name('comments.update');
-    // Route::delete('/comments/{id}', [CommentController::class, 'destroy'])->name('comments.destroy');
-// });
 Route::get('contact', [ContactController::class, 'index'])->name('contact.index');
 Route::post('contact', [ContactController::class, 'store'])->name('contact.store');
 

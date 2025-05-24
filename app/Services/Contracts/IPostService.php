@@ -16,7 +16,7 @@ use Illuminate\Support\Collection;
 interface IPostService
 {
     public function show() : LengthAwarePaginator;
-    public function showForAdmin() : LengthAwarePaginator;
+    public function showForAdmin(int $perPage) : LengthAwarePaginator;
     public function showById(int $id) : ?array;
     public function searchByTitle(string $title) : ?array;
 

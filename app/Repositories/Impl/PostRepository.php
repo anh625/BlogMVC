@@ -36,9 +36,9 @@ class PostRepository extends BaseRepository implements IPostRepository
             ->paginate($this->perPage);
     }
 
-    public function showForAdmin(): LengthAwarePaginator
+    public function showForAdmin(int $perPage): LengthAwarePaginator
     {
-        return Post::with('category')->paginate($this->perPage);
+        return Post::with('category')->paginate($perPage);
     }
 
 

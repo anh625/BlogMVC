@@ -20,21 +20,23 @@
                 Lọc & tìm kiếm bài viết
             </div>
             <div class="card-body">
-                <form method="GET" action="{{ route('admin.posts.index') }}">
+                <form method="GET" action="{{ route('admin.posts.search') }}">
                     <div class="row g-4 align-items-end">
                         <div class="col-12 col-md-4">
-                            <label for="keyword" class="form-label fw-semibold mb-1">Tìm kiếm</label>
-                            <input type="text" id="keyword" name="keyword" value="{{ request('keyword') }}"
+                            <label for="title" class="form-label fw-semibold mb-1">Tìm kiếm</label>
+                            <input type="text" id="title" name="title" value="{{ request('title') }}"
                                 class="form-control form-control-sm" placeholder="Tìm theo tiêu đề bài viết..."
                                 aria-label="Tìm kiếm bài viết theo tiêu đề">
                         </div>
                         <div class="col-12 col-md-3">
-                            <label for="status" class="form-label fw-semibold mb-1">Trạng thái</label>
-                            <select id="status" name="status" class="form-select form-select-sm"
+                            <label for="post_status" class="form-label fw-semibold mb-1">Trạng thái</label>
+                            <select id="post_status" name="post_status" class="form-select form-select-sm"
                                 aria-label="Chọn trạng thái bài viết">
                                 <option value="">Tất cả</option>
-                                <option value="1" {{ request('status') == '1' ? 'selected' : '' }}>Công khai</option>
-                                <option value="0" {{ request('status') == '0' ? 'selected' : '' }}>Lưu trữ</option>
+                                <option value="1" {{ request('post_status') == '1' ? 'selected' : '' }}>Công khai
+                                </option>
+                                <option value="0" {{ request('post_status') == '0' ? 'selected' : '' }}>Lưu trữ
+                                </option>
                             </select>
                         </div>
 
@@ -42,11 +44,12 @@
                             <label for="category_id" class="form-label fw-semibold mb-1">Danh mục</label>
                             <select id="category_id" name="category_id" class="form-select form-select-sm"
                                 aria-label="Chọn danh mục bài viết">
-                                <option value="all">Tất cả</option>
+                                <option value="">
+                                    Tất cả
+                                </option>
                                 @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}"
-                                        {{-- {{ request('category_id') == $category->id ? 'selected' : '' }} --}}
-                                        >
+                                    <option value="{{ $category->category_id }}"
+                                        {{ request('category_id') == $category->category_id ? 'selected' : '' }}>
                                         {{ $category->category_name }}
                                     </option>
                                 @endforeach
@@ -130,9 +133,8 @@
                 </tbody>
             </table>
         </div>
-
-        <div class="d-flex justify-content-end mt-3">
-            {{ $posts->withQueryString()->links('pagination::bootstrap-5') }}
+        <div class="mt-3">
+            {{ $posts->appends(request()->query())->links('pagination::bootstrap-5') }}
         </div>
     </div>
 @endsection

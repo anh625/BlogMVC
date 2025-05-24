@@ -110,20 +110,6 @@
                     </ul>
                 </div>
                     <!-- END sidebar-box -->
-
-                <div class="sidebar-box">
-                        <h3 class="heading">Tags</h3>
-                        <ul class="tags">
-                            @if($data['categories'] instanceof \Illuminate\Support\Collection)
-                                @foreach($data['categories'] as $c)
-                                    <li><a href="{{ route('posts.showByCategoryId', $c['category_id']) }}">
-                                            {{ $c['category_name'] }}
-                                        </a>
-                                    </li>
-                                @endforeach
-                            @endif
-                        </ul>
-                    </div>
             </div>
         </div>
         </div>

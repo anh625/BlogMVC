@@ -43,23 +43,31 @@ class PostService implements IPostService
     public function showById(int $id) : ?array
     {
         $data['post'] = $this->postRepository->getById($id);
-        if(empty($data['post'])){
-            return $data['post'];
-        }
-        //dd($this->userSession->getUser());
         $user_id = '';
-        if($this->userSession->getUser()){
-            $user_id = $this->userSession->getUser()['user_id'];
+        if(!empty($data['post'])){
+            $user_id = $data['post']->user_id;
         }
 
-        if( $user_id != $data['post']->user_id ){
-            $this->postRepository->incrementView($id);
+        $post = $data['post'] ?? null;
+        $isDraft = $post && !$post->post_status;
+        $isNotLoggedIn = !$this->userSession->getUser();
+        $isNotOwnerOrAdmin = !$this->userSession->isUserUsing($user_id) &&
+            ($this->userSession->getUser()['is_admin'] ?? null) !== 'admin';
+
+        if ($isDraft && ($isNotLoggedIn || $isNotOwnerOrAdmin)) {
+            $data = null;
         }
+
         return $data;
     }
     public function getById(int $id) : ?Post
     {
-        return $this->postRepository->getById($id);
+        $post = $this->postRepository->getById($id);
+        $user_id = $post->user_id;
+        if(!$this->userSession->isUserUsing($user_id) && $this->userSession->getUser()['is_admin'] != 'admin'){
+            $post = null;
+        }
+        return $post;
     }
     public function searchByTitle(string $title) : ?array
     {
@@ -102,7 +110,7 @@ class PostService implements IPostService
     public function destroy(int $post_id) : ?Post
     {
         $user_id = $this->postRepository->getById($post_id)->user_id;
-        if(!$this->userSession->isUserUsing($user_id)){
+        if(!$this->userSession->isUserUsing($user_id) && $this->userSession->getUser()['is_admin'] != 'admin'){
             return null;
         }
         return $this->postRepository->delete($post_id);

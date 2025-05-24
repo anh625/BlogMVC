@@ -21,10 +21,7 @@ class PostRepository extends BaseRepository implements IPostRepository
     {
         return Post::with(['category', 'user', 'comments.user'])
             ->where('post_id', $id)
-            ->where('post_status', true)
-            ->whereHas('user', function ($query) {
-                $query->where('is_active', true);
-            })->firstOrFail();
+            ->firstOrFail();
     }
     public function show(): LengthAwarePaginator
     {

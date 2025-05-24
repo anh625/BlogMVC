@@ -35,11 +35,11 @@ Route::get('user/posts/{id}/post/', [PostController::class, 'showByUserId'])->na
 Route::middleware(['user'])->group(function () {
     Route::get('user/posts/create', [PostController::class, 'showFormCreatePost'])->name('posts.create');
     Route::post('user/posts/store', [PostController::class, 'store'])->name('posts.store');
-    Route::get('user/posts/edit/{id}', [PostController::class, 'showFormEditPost'])->name('posts.edit');
-    Route::put('user/posts/update/{id}', [PostController::class, 'update'])->name('posts.update');
-    Route::delete('user/posts/destroy/{id}', [PostController::class, 'destroy'])->name('posts.destroy');
+    Route::get('user/posts/{id}/edit', [PostController::class, 'showFormEditPost'])->name('posts.edit');
+    Route::put('user/posts/{id}/update', [PostController::class, 'update'])->name('posts.update');
+    Route::delete('user/posts/{id}/destroy', [PostController::class, 'destroy'])->name('posts.destroy');
 });
-Route::get('user/posts/{id}', [PostController::class, 'showById'])->name('posts.showById')->withoutMiddleware('user');
+Route::get('user/posts/{id}', [PostController::class, 'showById'])->name('posts.showById');
 
 
 Route::get('/admin/posts', [PostController::class, 'index'])->name('posts.show');

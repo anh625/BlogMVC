@@ -23,7 +23,7 @@ class CategoryController extends Controller
     {
         //
         $categories = $this->categoryService->getAll();
-        return view('admin.categories.index', compact('categories'));
+        return view('admin.categories.index', compact('categories'))->with('currentTitle', 'Danh sách danh mục');
     }
 
     /**

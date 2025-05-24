@@ -34,20 +34,6 @@
                     @enderror
                 </div>
 
-                <div class="mb-3">
-                    <label for="category_slug" class="form-label">Slug (tuỳ chọn)</label>
-                    <input
-                        type="text"
-                        name="category_slug"
-                        id="category_slug"
-                        class="form-control @error('category_slug') is-invalid @enderror"
-                        value="{{ old('category_slug') }}"
-                    >
-                    @error('category_slug')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
                 <div class="d-flex justify-content-end">
                     <button type="submit" class="btn btn-success">Lưu danh mục</button>
                 </div>

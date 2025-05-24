@@ -17,4 +17,6 @@ interface IAdminService
     public function createUser(array $data): ?User;
     public function updateStatusUser(string $userId, bool $status): ?User;
     public function updateUserRole(string $userId, string $role): ?User;
+    public function countUsersByStatus(int $isActive): int;
+    public function countPostsByStatus(int $status): int;
 }

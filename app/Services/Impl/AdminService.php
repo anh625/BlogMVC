@@ -2,6 +2,7 @@
 
 namespace App\Services\Impl;
 
+use App\Models\Post;
 use App\Models\User;
 use App\Repositories\Contracts\IUserRepository;
 use App\Services\Contracts\IAdminService;
@@ -100,5 +101,15 @@ class AdminService implements IAdminService
         $user->role = $role;
         $user->save();
         return $user;
+    }
+
+     public function countUsersByStatus(int $isActive): int
+    {
+        return User::where('is_active', $isActive)->count();
+    }
+
+    public function countPostsByStatus(int $status): int
+    {
+        return Post::where('post_status', $status)->count();
     }
 }

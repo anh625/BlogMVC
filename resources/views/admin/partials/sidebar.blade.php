@@ -1,31 +1,33 @@
-<div class="sidebar p-3 bg-light border-end" style="min-height: 100vh;">
-    <h5 class="mb-4 text-primary text-uppercase">Quản trị</h5>
+<div class="sidebar bg-white border-end shadow-sm" style="min-height: 100vh; width: 250px;">
+    <div class="p-4 border-bottom">
+        <h6 class="text-uppercase text-primary fw-bold mb-0" style="letter-spacing: 0.05em;">Quản trị</h6>
+    </div>
 
-    <ul class="nav flex-column nav-pills">
-        <li class="nav-item mb-2">
+    <ul class="nav flex-column p-3 gap-1">
+        <li class="nav-item">
             <a href="{{ route('admin.dashboard.index') }}"
-               class="nav-link {{ request()->routeIs('admin.dashboard.*') ? 'active' : '' }}">
+               class="nav-link d-flex align-items-center {{ request()->routeIs('admin.dashboard.*') ? 'active bg-primary text-white' : 'text-dark' }}">
                 <i class="bi bi-speedometer2 me-2"></i> Dashboard
             </a>
         </li>
 
-            {{-- <li class="nav-item mb-2">
-                <a href="{{ route('admin.users.index') }}"
-                class="nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
-                    <i class="bi bi-people me-2"></i> Tài khoản
-                </a>
-            </li> --}}
+        <li class="nav-item">
+            <a href="{{ route('admin.users.index') }}"
+               class="nav-link d-flex align-items-center {{ request()->routeIs('admin.users.*') ? 'active bg-primary text-white' : 'text-dark' }}">
+                <i class="bi bi-people me-2"></i> Tài khoản
+            </a>
+        </li>
 
-        <li class="nav-item mb-2">
+        <li class="nav-item">
             <a href="{{ route('admin.posts.index') }}"
-               class="nav-link {{ request()->routeIs('admin.posts.*') ? 'active' : '' }}">
+               class="nav-link d-flex align-items-center {{ request()->routeIs('admin.posts.*') ? 'active bg-primary text-white' : 'text-dark' }}">
                 <i class="bi bi-file-earmark-text me-2"></i> Bài viết
             </a>
         </li>
 
-        <li class="nav-item mb-2">
+        <li class="nav-item">
             <a href="{{ route('admin.categories.index') }}"
-               class="nav-link {{ request()->routeIs('admin.categories.*') ? 'active' : '' }}">
+               class="nav-link d-flex align-items-center {{ request()->routeIs('admin.categories.*') ? 'active bg-primary text-white' : 'text-dark' }}">
                 <i class="bi bi-tags me-2"></i> Danh mục
             </a>
         </li>

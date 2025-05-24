@@ -1,6 +1,7 @@
 <?php
 
 return [
+    App\Providers\AdminProvider::class,
     App\Providers\AppServiceProvider::class,
     App\Providers\CategoryProvider::class,
     App\Providers\CommentProvider::class,

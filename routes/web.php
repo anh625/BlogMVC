@@ -50,6 +50,8 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard.index');
     Route::get('/admin/posts', [AdminController::class, 'posts'])->name('admin.posts.index');
     Route::get('/admin/posts/{id}', [AdminController::class, 'detailpost'])->name('admin.posts.detail');
+    Route::get('/admin/users', [AdminController::class, 'getAllUsers'])->name('admin.users.index');
+    Route::post('/admin/users/{id}', [AdminController::class, 'updateUserStatus'])->name('admin.users.updateUserStatus');
 });
 
 

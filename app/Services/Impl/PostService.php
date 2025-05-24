@@ -11,6 +11,7 @@ use App\Services\Contracts\IPostService;
 use App\Session\UserSession;
 use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Http\Request;
 
 class PostService implements IPostService
 {
@@ -122,4 +123,21 @@ public function updateStatus(string $status, int $postId ): bool
 }
 
 
+    public function searchPosts(Request $request, int $perPage = 10) : LengthAwarePaginator
+    {
+        $data=[];
+        if($request->input('title') != ''){
+            $data['title'] = $request->input('title');
+        }
+        if($request->input('category_id') != ''){
+            $data['category_id'] = $request->input('category_id');
+        }
+        if($request->input('post_status') != ''){
+            $data['post_status'] = $request->input('post_status');
+        }
+        if($request->input('name') != ''){
+            $data['name'] = $request->input('name');
+        }
+        return $this->postRepository->searchPosts($data, $perPage);
+    }
 }

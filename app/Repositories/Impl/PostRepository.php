@@ -110,4 +110,19 @@ class PostRepository extends BaseRepository implements IPostRepository
 
         return $query->take(3)->get();
     }
+
+    public function searchPosts(array $filters = [],int $perPage = 10): LengthAwarePaginator
+    {
+        return Post::with('user') // quan hệ user phải được khai báo trong model Post
+            ->with('category')
+            ->when(!empty($filters['title']), fn($q) => $q->where('title', 'like', '%' . $filters['title'] . '%'))
+            ->when(isset($filters['post_status']), fn($q) => $q->where('post_status', $filters['post_status']))
+            ->when(!empty($filters['category_id']), fn($q) => $q->where('category_id', $filters['category_id']))
+            ->when(!empty($filters['name']), function ($q) use ($filters) {
+                $q->whereHas('user', function ($q) use ($filters) {
+                    $q->where('name', 'like', '%' . $filters['name'] . '%');
+                });
+            })
+            ->paginate($perPage);
+    }
 }

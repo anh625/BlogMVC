@@ -15,5 +15,5 @@ interface IPostRepository extends IBaseRepository
     public function getCategoryWithPostCount(): ?Collection;
     public function incrementView(int $id);
     public function getPopularPosts(int|null $id);
-
+    public function searchPosts(array $filters = [],int $perPage = 10): LengthAwarePaginator;
 }

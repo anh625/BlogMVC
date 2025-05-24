@@ -6,6 +6,7 @@ use App\Models\Post;
 use App\Services\Contracts\IAdminService;
 use App\Services\Contracts\ICategoryService;
 use App\Services\Contracts\IPostService;
+use App\Services\Contracts\IUserService;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -70,5 +71,25 @@ class AdminController extends Controller
             'active_posts' => $this->adminService->countPostsByStatus(1),
             'archived_posts' => $this->adminService->countPostsByStatus(0),
         ];
+    }
+
+    // đây là hàm xử lý rồi trả về kết quả. chưa trả về giao diện nào cả!!!
+    public function searchPosts(Request $request){
+         $posts = 'Not found';
+         if($this->postService->searchPosts($request)){
+             $posts = $this->postService->searchPosts($request);
+         }
+         dd($posts);
+         return view('admin.posts.index', compact('posts'));
+    }
+
+    // đây là hàm xử lý rồi trả về kết quả. chưa trả về giao diện nào cả!!!
+    public function searchUsers(Request $request){
+         $users = 'Not found';
+         if($this->adminService->searchUsers($request)){
+             $users = $this->adminService->searchUsers($request);
+         }
+         dd($users);
+        return view('admin.posts.index', compact('posts'));
     }
 }

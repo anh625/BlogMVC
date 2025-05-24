@@ -52,6 +52,8 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/admin/posts/{id}', [AdminController::class, 'detailpost'])->name('admin.posts.detail');
     Route::get('/admin/users', [AdminController::class, 'getAllUsers'])->name('admin.users.index');
     Route::post('/admin/users/{id}', [AdminController::class, 'updateUserStatus'])->name('admin.users.updateUserStatus');
+    Route::get('/admin/posts/search', [AdminController::class, 'searchPosts'])->name('admin.posts.search');
+    Route::get('/admin/users/search', [AdminController::class, 'searchUsers'])->name('admin.users.search');
 });
 
 

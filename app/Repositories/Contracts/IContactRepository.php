@@ -6,5 +6,5 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 interface IContactRepository extends IBaseRepository
 {
-    public function show(): LengthAwarePaginator;
+    public function show(int $perPage = 10): LengthAwarePaginator;
 }

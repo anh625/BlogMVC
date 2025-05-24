@@ -6,6 +6,7 @@ use App\Mappers\ContactDataMapper;
 use App\Models\Contact;
 use App\Repositories\Contracts\IContactRepository;
 use App\Services\Contracts\IContactService;
+use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class ContactService implements IContactService
@@ -25,10 +26,25 @@ class ContactService implements IContactService
         return $this->contactRepository->show();
     }
 
+    public function showById(int $id) : ?Contact
+    {
+        return $this->contactRepository->getById($id);
+    }
+
     public function add(ContactRequest $request) : ?Contact
     {
         $data = $this->contactDataMapper->mapForCreate($request);
         return $this->contactRepository->store($data);
+    }
+
+    public function update(Request $request, int $id) : ?Contact
+    {
+        return $this->contactRepository->update([ 'contact_status' => $request->input('contact_status') ], $id);
+    }
+
+    public function destroy(int $id) : ?Contact
+    {
+        return $this->contactRepository->delete($id);
     }
 
 }

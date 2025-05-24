@@ -50,6 +50,10 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/admin/posts', [AdminController::class, 'posts'])->name('admin.posts.index');
     Route::get('/admin/posts/search', [AdminController::class, 'searchPosts'])->name('admin.posts.search');
     Route::get('/admin/users/search', [AdminController::class, 'searchUsers'])->name('admin.users.search');
+    Route::get('/admin/contact', [AdminController::class, 'showContact'])->name('admin.contacts.index');
+    Route::get('/admin/contact/{id}', [AdminController::class, 'showContactById'])->name('admin.contact.showById');
+    Route::put('/admin/contact/{id}/update', [AdminController::class, 'updateContact'])->name('admin.contact.update');
+    Route::delete('/admin/contact/{id}/delete', [AdminController::class, 'deleteContact'])->name('admin.contact.delete');
 });
 
 

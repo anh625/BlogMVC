@@ -31,5 +31,12 @@
                 <i class="bi bi-tags me-2"></i> Danh mục
             </a>
         </li>
+
+        <li class="nav-item">
+            <a href="{{ route('admin.contacts.index') }}"
+               class="nav-link d-flex align-items-center {{ request()->routeIs('admin.contacts.*') ? 'active bg-primary text-white' : 'text-dark' }}">
+                <i class="bi bi-headset me-2"></i> Trợ giúp
+            </a>
+        </li>
     </ul>
 </div>

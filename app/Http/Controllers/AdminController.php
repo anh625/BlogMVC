@@ -106,7 +106,7 @@ class AdminController extends Controller
     public function showContact()
     {
         $contacts = $this->contactService->show();
-        return view('admin.contacts.index', compact('contacts'));
+        return view('admin.contacts.index', compact('contacts'))->with('currentTitle', 'Danh sách yêu cầu trợ giúp');
     }
 
     public function updateContact(int $id, Request $request)

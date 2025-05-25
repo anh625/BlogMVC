@@ -41,9 +41,9 @@
                                     @endif
 
                                 </span>
-                                <h2><a href="{{ asset(route('posts.showById', $p->post_id)) }}">{{ $p->title }}</a></h2>
+                                <h2><a href="{{route('posts.showById', $p->post_id) }}">{{ $p->title }}</a></h2>
                                 <p>{{ $p->description }}</p>
-                                <p><a href="{{ asset(route('posts.showById', $p->post_id)) }}" class="btn btn-sm btn-outline-primary">Read More</a></p>
+                                <p><a href="{{ route('posts.showById', $p->post_id) }}" class="btn btn-sm btn-outline-primary">Read More</a></p>
                                 <a href="{{ route('posts.edit', $p->post_id) }}" class="btn btn-sm btn-outline-warning">Edit</a>
                                 <form action="{{ route('posts.destroy', $p->post_id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this post?');">
                                     @csrf

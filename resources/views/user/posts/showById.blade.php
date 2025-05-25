@@ -42,103 +42,6 @@
 
                     {{-- Comment --}}
                     <div class="pt-5 comment-wrap">
-                        {{-- <h3 class="mb-5 heading">6 Comments</h3> --}}
-                        {{-- <ul class="comment-list">
-
-                            <li class="comment">
-                                <div class="vcard">
-                                    <img src="images/person_1.jpg" alt="Image placeholder">
-                                </div>
-                                <div class="comment-body">
-                                    <h3>Jean Doe</h3>
-                                    <div class="meta">January 9, 2018 at 2:21pm</div>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum
-                                        necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente
-                                        iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
-                                    <p><a href="#" class="reply rounded">Reply</a></p>
-                                </div>
-                            </li>
-
-                            <li class="comment">
-                                <div class="vcard">
-                                    <img src="images/person_2.jpg" alt="Image placeholder">
-                                </div>
-                                <div class="comment-body">
-                                    <h3>Jean Doe</h3>
-                                    <div class="meta">January 9, 2018 at 2:21pm</div>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum
-                                        necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente
-                                        iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
-                                    <p><a href="#" class="reply rounded">Reply</a></p>
-                                </div>
-
-                                <ul class="children">
-                                    <li class="comment">
-                                        <div class="vcard">
-                                            <img src="images/person_3.jpg" alt="Image placeholder">
-                                        </div>
-                                        <div class="comment-body">
-                                            <h3>Jean Doe</h3>
-                                            <div class="meta">January 9, 2018 at 2:21pm</div>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem
-                                                laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe
-                                                enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?
-                                            </p>
-                                            <p><a href="#" class="reply rounded">Reply</a></p>
-                                        </div>
-
-
-                                        <ul class="children">
-                                            <li class="comment">
-                                                <div class="vcard">
-                                                    <img src="images/person_4.jpg" alt="Image placeholder">
-                                                </div>
-                                                <div class="comment-body">
-                                                    <h3>Jean Doe</h3>
-                                                    <div class="meta">January 9, 2018 at 2:21pm</div>
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur
-                                                        quidem laborum necessitatibus, ipsam impedit vitae autem, eum
-                                                        officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum
-                                                        impedit necessitatibus, nihil?</p>
-                                                    <p><a href="#" class="reply rounded">Reply</a></p>
-                                                </div>
-
-                                                <ul class="children">
-                                                    <li class="comment">
-                                                        <div class="vcard">
-                                                            <img src="images/person_5.jpg" alt="Image placeholder">
-                                                        </div>
-                                                        <div class="comment-body">
-                                                            <h3>Jean Doe</h3>
-                                                            <div class="meta">January 9, 2018 at 2:21pm</div>
-                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                                                Pariatur quidem laborum necessitatibus, ipsam impedit vitae
-                                                                autem, eum officia, fugiat saepe enim sapiente iste iure!
-                                                                Quam voluptas earum impedit necessitatibus, nihil?</p>
-                                                            <p><a href="#" class="reply rounded">Reply</a></p>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-
-                            <li class="comment">
-                                <div class="vcard">
-                                    <img src="images/person_1.jpg" alt="Image placeholder">
-                                </div>
-                                <div class="comment-body">
-                                    <h3>Jean Doe</h3>
-                                    <div class="meta">January 9, 2018 at 2:21pm</div>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum
-                                        necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente
-                                        iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
-                                    <p><a href="#" class="reply rounded">Reply</a></p>
-                                </div>
-                            </li>
-                        </ul> --}}
                         <ul class="comment-list">
                             @foreach ($data['post']->comments as $cmt)
                                 @if($cmt->user->is_active != null)
@@ -191,30 +94,6 @@
                 <!-- END main-content -->
 
                 <div class="col-md-12 col-lg-4 sidebar">
-                    {{--                    <div class="sidebar-box search-form-wrap"> --}}
-                    {{--                        <form action="#" class="sidebar-search-form"> --}}
-                    {{--                            <span class="bi-search"></span> --}}
-                    {{--                            <input type="text" class="form-control" id="s" placeholder="Type a keyword and hit enter"> --}}
-                    {{--                        </form> --}}
-                    {{--                    </div> --}}
-                    <!-- END sidebar-box -->
-                    {{--                    <div class="sidebar-box"> --}}
-                    {{--                        <div class="bio text-center"> --}}
-                    {{--                            <img src="images/person_2.jpg" alt="Image Placeholder" class="img-fluid mb-3"> --}}
-                    {{--                            <div class="bio-body"> --}}
-                    {{--                                <h2>Hannah Anderson</h2> --}}
-                    {{--                                <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Exercitationem facilis sunt repellendus excepturi beatae porro debitis voluptate nulla quo veniam fuga sit molestias minus.</p> --}}
-                    {{--                                <p><a href="#" class="btn btn-primary btn-sm rounded px-2 py-2">Read my bio</a></p> --}}
-                    {{--                                <p class="social"> --}}
-                    {{--                                    <a href="#" class="p-2"><span class="fa fa-facebook"></span></a> --}}
-                    {{--                                    <a href="#" class="p-2"><span class="fa fa-twitter"></span></a> --}}
-                    {{--                                    <a href="#" class="p-2"><span class="fa fa-instagram"></span></a> --}}
-                    {{--                                    <a href="#" class="p-2"><span class="fa fa-youtube-play"></span></a> --}}
-                    {{--                                </p> --}}
-                    {{--                            </div> --}}
-                    {{--                        </div> --}}
-                    {{--                    </div> --}}
-                    <!-- END sidebar-box -->
                     <div class="sidebar-box">
                         <h3 class="heading">Popular Posts</h3>
                         <div class="post-entry-sidebar">
@@ -253,80 +132,10 @@
                         </ul>
                     </div>
                     <!-- END sidebar-box -->
-
-                    <div class="sidebar-box">
-                        <h3 class="heading">Tags</h3>
-                        <ul class="tags">
-                            @if ($data['categories'] instanceof \Illuminate\Support\Collection)
-                                @foreach ($data['categories'] as $c)
-                                    <li><a href="{{ route('posts.showByCategoryId', $c['category_id']) }}">
-                                            {{ $c['category_name'] }}
-                                        </a>
-                                    </li>
-                                @endforeach
-                            @endif
-                        </ul>
-                    </div>
                 </div>
                 <!-- END sidebar -->
 
             </div>
         </div>
     </section>
-
-    <!-- Start posts-entry -->
-    {{--    <section class="section posts-entry posts-entry-sm bg-light"> --}}
-    {{--        <div class="container"> --}}
-    {{--            <div class="row mb-4"> --}}
-    {{--                <div class="col-12 text-uppercase text-black">More Blog Posts</div> --}}
-    {{--            </div> --}}
-    {{--            <div class="row"> --}}
-    {{--                <div class="col-md-6 col-lg-3"> --}}
-    {{--                    <div class="blog-entry"> --}}
-    {{--                        <a href="single.html" class="img-link"> --}}
-    {{--                            <img src="images/img_1_horizontal.jpg" alt="Image" class="img-fluid"> --}}
-    {{--                        </a> --}}
-    {{--                        <span class="date">Apr. 14th, 2022</span> --}}
-    {{--                        <h2><a href="single.html">Thought you loved Python? Wait until you meet Rust</a></h2> --}}
-    {{--                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p> --}}
-    {{--                        <p><a href="#" class="read-more">Continue Reading</a></p> --}}
-    {{--                    </div> --}}
-    {{--                </div> --}}
-    {{--                <div class="col-md-6 col-lg-3"> --}}
-    {{--                    <div class="blog-entry"> --}}
-    {{--                        <a href="single.html" class="img-link"> --}}
-    {{--                            <img src="images/img_2_horizontal.jpg" alt="Image" class="img-fluid"> --}}
-    {{--                        </a> --}}
-    {{--                        <span class="date">Apr. 14th, 2022</span> --}}
-    {{--                        <h2><a href="single.html">Startup vs corporate: What job suits you best?</a></h2> --}}
-    {{--                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p> --}}
-    {{--                        <p><a href="#" class="read-more">Continue Reading</a></p> --}}
-    {{--                    </div> --}}
-    {{--                </div> --}}
-    {{--                <div class="col-md-6 col-lg-3"> --}}
-    {{--                    <div class="blog-entry"> --}}
-    {{--                        <a href="single.html" class="img-link"> --}}
-    {{--                            <img src="images/img_3_horizontal.jpg" alt="Image" class="img-fluid"> --}}
-    {{--                        </a> --}}
-    {{--                        <span class="date">Apr. 14th, 2022</span> --}}
-    {{--                        <h2><a href="single.html">UK sees highest inflation in 30 years</a></h2> --}}
-    {{--                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p> --}}
-    {{--                        <p><a href="#" class="read-more">Continue Reading</a></p> --}}
-    {{--                    </div> --}}
-    {{--                </div> --}}
-    {{--                <div class="col-md-6 col-lg-3"> --}}
-    {{--                    <div class="blog-entry"> --}}
-    {{--                        <a href="single.html" class="img-link"> --}}
-    {{--                            <img src="images/img_4_horizontal.jpg" alt="Image" class="img-fluid"> --}}
-    {{--                        </a> --}}
-    {{--                        <span class="date">Apr. 14th, 2022</span> --}}
-    {{--                        <h2><a href="single.html">Don’t assume your user data in the cloud is safe</a></h2> --}}
-    {{--                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p> --}}
-    {{--                        <p><a href="#" class="read-more">Continue Reading</a></p> --}}
-    {{--                    </div> --}}
-    {{--                </div> --}}
-    {{--            </div> --}}
-    {{--        </div> --}}
-    {{--    </section> --}}
-    <!-- End posts-entry -->
 @endsection

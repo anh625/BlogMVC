@@ -15,8 +15,8 @@ class ContactRepository extends BaseRepository implements IContactRepository
         // Gọi constructor của BaseRepository và truyền vào model User
         parent::__construct(new Contact());
     }
-    public function show(): LengthAwarePaginator
+    public function show(int $perPage = 10): LengthAwarePaginator
     {
-        return Contact::paginate($this->perPage);
+        return Contact::paginate($perPage);
     }
 }

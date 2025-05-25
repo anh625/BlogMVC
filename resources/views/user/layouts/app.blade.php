@@ -4,7 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
 
+        #app {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+        }
+
+    </style>
     <script src="{{ asset('tinymce/js/tinymce/tinymce.min.js') }}"></script>
     <script>
         tinymce.init({
@@ -69,11 +85,15 @@
 
 </head>
 <body>
-@include('user.layouts.partials.header')
+<div id="app">
+    @include('user.layouts.partials.header')
 
+    <main>
         @yield('content')
+    </main>
 
-@include('user.layouts.partials.footer')
+    @include('user.layouts.partials.footer')
+</div>
 @include('user.layouts.partials.preloader')
 <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('js/tiny-slider.js') }}"></script>

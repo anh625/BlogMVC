@@ -46,7 +46,7 @@ class AdminController extends Controller
 
     public function getAllUsers()
     {
-        $users = $this->adminService->listUsers(5);
+        $users = $this->adminService->listUsers(10);
         return view('admin.users.index', compact('users'))->with('currentTitle', 'Danh sách người dùng');
     }
 

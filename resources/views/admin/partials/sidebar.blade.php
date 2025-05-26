@@ -1,13 +1,13 @@
 <div class="sidebar bg-white border-end shadow-sm" style="min-height: 100vh; width: 250px;">
     <div class="p-4 border-bottom">
-        <h6 class="text-uppercase text-primary fw-bold mb-0" style="letter-spacing: 0.05em;">Quản trị</h6>
+        <h6 class="text-uppercase text-primary fw-bold mb-0" style="letter-spacing: 0.05em;">Quản trị Blogy</h6>
     </div>
 
     <ul class="nav flex-column p-3 gap-1">
         <li class="nav-item">
             <a href="{{ route('admin.dashboard.index') }}"
                class="nav-link d-flex align-items-center {{ request()->routeIs('admin.dashboard.*') ? 'active bg-primary text-white' : 'text-dark' }}">
-                <i class="bi bi-speedometer2 me-2"></i> Dashboard
+                <i class="bi bi-speedometer2 me-2"></i> Trang chủ
             </a>
         </li>
 

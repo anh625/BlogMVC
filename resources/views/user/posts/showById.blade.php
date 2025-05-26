@@ -1,7 +1,7 @@
 @extends('user.layouts.app')
 @section('content')
     <div class="site-cover site-cover-sm same-height overlay single-page"
-        style="background-image: url('{{ asset('storage/'.$data['post']->banner_image) }}');">
+        style="background-image: url('{{ asset('storage/' . $data['post']->banner_image) }}');">
         <div class="container">
             <div class="row same-height justify-content-center">
                 <div class="col-md-6">
@@ -10,10 +10,13 @@
                         <div class="post-meta align-items-center text-center">
                             @php
                                 $avatar = 'images/users/avatar/default.png';
-                                if($data['post']->user->user_image) $avatar = $data['post']->user->user_image;
+                                if ($data['post']->user->user_image) {
+                                    $avatar = $data['post']->user->user_image;
+                                }
                             @endphp
-                            <a href="{{ route('posts.showByUserId',$data['post']->user_id) }}">
-                            <figure class="author-figure mb-0 me-3 d-inline-block"><img src="{{ asset('storage/'.$avatar) }}" alt="Image" class="img-fluid"></figure>
+                            <a href="{{ route('posts.showByUserId', $data['post']->user_id) }}">
+                                <figure class="author-figure mb-0 me-3 d-inline-block"><img
+                                        src="{{ asset('storage/' . $avatar) }}" alt="Image" class="img-fluid"></figure>
                             </a>
                             <span class="d-inline-block mt-1">By {{ $data['post']->user->name }}</span>
                             <span>&nbsp;-&nbsp; {{ $data['post']->updated_at->format('F j, Y') }}</span>
@@ -37,30 +40,36 @@
 
 
                     <div class="pt-5">
-                        <p>Categories:  <a href="{{ asset(route('posts.showByCategoryId', $data['post']->category_id)) }}"> {{ $data['post']->category->category_name }}</a></p>
+                        <p>Categories: <a href="{{ asset(route('posts.showByCategoryId', $data['post']->category_id)) }}">
+                                {{ $data['post']->category->category_name }}</a></p>
                     </div>
 
                     {{-- Comment --}}
                     <div class="pt-5 comment-wrap">
-                        <ul class="comment-list">
+                        <h5 class="mb-4">Bình luận ({{ $data['post']->comments->count() }})</h5>
+
+                        <ul class="list-unstyled">
                             @foreach ($data['post']->comments as $cmt)
-                                @if($cmt->user->is_active != null)
-                                <li class="comment">
-                                    <div class="vcard">
-                                        @php
-                                        $CmtAvatar = 'images/users/avatar/default.png';
-                                        if($cmt->user->user_image) $CmtAvatar = $cmt->user->user_image;
-                                        @endphp
-                                        <img src="{{asset('storage/'. $CmtAvatar) }}"
-                                            alt="Avatar">
-                                    </div>
-                                    <div class="comment-body">
-                                        <h3>{{ $cmt->user->name }}</h3>
-                                        <div class="meta">{{ $cmt->created_at->format('d/m/Y \l\ú\c H:i') }}</div>
-                                        <p>{{ $cmt->cmt_content }}</p>
-                                        {{-- <p><a href="#" class="reply rounded">Reply</a></p> --}}
-                                    </div>
-                                </li>
+                                @if ($cmt->user->is_active)
+                                    @php
+                                        $CmtAvatar = $cmt->user->user_image
+                                            ? asset('storage/' . $cmt->user->user_image)
+                                            : asset('images/users/avatar/default.png');
+                                    @endphp
+
+                                    <li class="d-flex mb-4 pb-3 border-bottom">
+                                        <div class="flex-shrink-0">
+                                            <img src="{{ $CmtAvatar }}" alt="Avatar" class="rounded-circle"
+                                                style="width: 48px; height: 48px; object-fit: cover;">
+                                        </div>
+                                        <div class="flex-grow-1 ms-3">
+                                            <div class="d-flex justify-content-between">
+                                                <h6 class="mb-0">{{ $cmt->user->name }}</h6>
+                                                <small class="text-muted">{{ $cmt->created_at->diffForHumans() }}</small>
+                                            </div>
+                                            <p class="mb-1 text-body">{{ $cmt->cmt_content }}</p>
+                                        </div>
+                                    </li>
                                 @endif
                             @endforeach
                         </ul>
@@ -68,24 +77,32 @@
                         <!-- END comment-list -->
                         {{-- Form Comment --}}
 
-                        <div class="comment-form-wrap pt-5">
-                            <h3 class="mb-5">Leave a comment</h3>
-                            @if(session('user'))
-                            <form action="{{ route('comments.store', ['id' => $data['post']->post_id]) }}" method="POST"
-                                class="p-5 bg-light">
-                                @csrf
-                                <div class="form-group">
-                                    <label for="message">Message</label>
-                                    <textarea name="cmt_content" id="message" cols="30" rows="10" class="form-control"></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <input type="submit" value="Post Comment" class="btn btn-primary">
-                                </div>
-                            </form>
+                        <div class="comment-form-wrap mt-5">
+                            <h5 class="mb-3">Leave a comment</h5>
+
+                            @if (session('user'))
+                                <form action="{{ route('comments.store', ['id' => $data['post']->post_id]) }}"
+                                    method="POST" class="border p-3 rounded bg-light shadow-sm">
+                                    @csrf
+                                    <div class="mb-3">
+                                        <label for="message" class="form-label fw-semibold">Message</label>
+                                        <textarea name="cmt_content" id="message" rows="4" class="form-control" placeholder="Nhập nội dung tại đây..."
+                                            required></textarea>
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                        <button type="submit" class="btn btn-sm btn-primary">
+                                            <i class="bi bi-send me-1"></i> Send
+                                        </button>
+                                    </div>
+                                </form>
                             @else
-                                <p class="text-danger">Cần đăng nhập để tiếp tục</p>
+                                <div class="alert alert-warning small mb-0">
+                                    Vui lòng <a href="{{ route('login') }}" class="text-decoration-underline">đăng nhập</a>
+                                    để bình luận.
+                                </div>
                             @endif
                         </div>
+
 
                     </div>
 

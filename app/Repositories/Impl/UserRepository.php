@@ -29,7 +29,8 @@ class UserRepository extends BaseRepository implements IUserRepository
     public function search(array $filters = [],int $perPage = 10): LengthAwarePaginator
     {
         return User::with('posts') // quan hệ user phải được khai báo trong model Post
-            ->when(!empty($filters['key_word']), function ($q) use ($filters) {
+        ->where('is_admin' , 'user')
+        ->when(!empty($filters['key_word']), function ($q) use ($filters) {
                 $keyword = $filters['key_word'];
                 $q->where(function ($query) use ($keyword) {
                     $query->where('name', 'like', '%' . $keyword . '%')

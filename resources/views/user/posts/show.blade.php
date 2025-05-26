@@ -8,6 +8,7 @@
         height: 100%;
         object-fit: contain;
     }
+    
 </style>
 @extends('user.layouts.app')
 @section('content')

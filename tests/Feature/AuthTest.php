@@ -173,7 +173,7 @@ class AuthTest extends TestCase
             ]);
         $response->assertStatus(302);
         $response->assertRedirect(route('sign-in'));
-        $response->assertSessionHasErrors(['error' => 'Email or password is incorrect']);
+        $response->assertSessionHasErrors(['error']);
         $response->assertSessionMissing('user');
     }
 

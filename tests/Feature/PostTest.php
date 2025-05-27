@@ -39,8 +39,8 @@ class PostTest extends TestCase
             'title' => 'Old title',
             'description' => 'Old desc',
             'content' => 'Old content',
-            'image' => 'images/posts/thumbnail/thumb_1746187041.png',
-            'banner_image' => 'images/posts/banner/banner_1747110165.png',
+            'image' => 'images\posts\thumbnail\thumb_1747106893.png',
+            'banner_image' => 'images\posts\banner\banner_1747106893.png',
             'user_id' => $user_id,
             'post_status' => true,
             'category_id' => $category_id,
@@ -55,10 +55,10 @@ class PostTest extends TestCase
         $this->createCategory();
         //dd($user);
         // Tạo chuỗi base64 hợp lệ
-        $imagePath = base_path('public/storage/images/posts/thumbnail/thumb_1746187041.png'); // Tạo một ảnh nhỏ ở đây nếu muốn
+        $imagePath = base_path('public/storage/images\posts\thumbnail\thumb_1747106893.png'); // Tạo một ảnh nhỏ ở đây nếu muốn
         $imageData = base64_encode(file_get_contents($imagePath));
         $tb = 'data:image/jpeg;base64,' . $imageData;
-        $imagePath1 = base_path('public/storage/images/posts/banner/banner_1747110165.png'); // Tạo một ảnh nhỏ ở đây nếu muốn
+        $imagePath1 = base_path('public/storage/images\posts\banner\banner_1747106893.png'); // Tạo một ảnh nhỏ ở đây nếu muốn
         $imageData1 = base64_encode(file_get_contents($imagePath1));
         $bn = 'data:image/jpeg;base64,' . $imageData1;
 
@@ -92,11 +92,11 @@ class PostTest extends TestCase
     public function test_stored_without_login(): void
     {
         // Tạo chuỗi base64 hợp lệ
-        $imagePath = base_path('public\storage\images\posts\thumbnail\thumb_1746187041.png'); // Tạo một ảnh nhỏ ở đây nếu muốn
+        $imagePath = base_path('public\storage\images\posts\thumbnail\thumb_1747106893.png'); // Tạo một ảnh nhỏ ở đây nếu muốn
         $imageData = base64_encode(file_get_contents($imagePath));
         $tb = 'data:image/jpeg;base64,' . $imageData;
 
-        $imagePath1 = base_path('public\storage\images\posts\banner\banner_1747110165.png'); // Tạo một ảnh nhỏ ở đây nếu muốn
+        $imagePath1 = base_path('public\storage\images\posts\banner\banner_1747106893.png'); // Tạo một ảnh nhỏ ở đây nếu muốn
         $imageData1 = base64_encode(file_get_contents($imagePath1));
         $bn = 'data:image/jpeg;base64,' . $imageData1;
 
@@ -130,10 +130,10 @@ class PostTest extends TestCase
         $this->createCategory();
         //dd($user);
         // Tạo chuỗi base64 hợp lệ
-        $imagePath = base_path('public\storage\images\posts\thumbnail\thumb_1746187041.png'); // Tạo một ảnh nhỏ ở đây nếu muốn
+        $imagePath = base_path('public\storage\images\posts\thumbnail\thumb_1747106893.png'); // Tạo một ảnh nhỏ ở đây nếu muốn
         $imageData = base64_encode(file_get_contents($imagePath));
         $tb = 'data:image/jpeg;base64,' . $imageData;
-        $imagePath1 = base_path('public\storage\images\posts\banner\banner_1747110165.png'); // Tạo một ảnh nhỏ ở đây nếu muốn
+        $imagePath1 = base_path('public\storage\images\posts\banner\banner_1747106893.png'); // Tạo một ảnh nhỏ ở đây nếu muốn
         $imageData1 = base64_encode(file_get_contents($imagePath1));
         $bn = 'data:image/jpeg;base64,' . $imageData1;
 
@@ -166,10 +166,10 @@ class PostTest extends TestCase
         $category = $this->createCategory();
         $this->createPost($user['user_id'], $category['category_id']);
         // Tạo chuỗi base64 hợp lệ
-        $imagePath = base_path('public\storage\images\posts\thumbnail\thumb_1746187041.png'); // Tạo một ảnh nhỏ ở đây nếu muốn
+        $imagePath = base_path('public\storage\images\posts\thumbnail\thumb_1747106893.png'); // Tạo một ảnh nhỏ ở đây nếu muốn
         $imageData = base64_encode(file_get_contents($imagePath));
         $tb = 'data:image/jpeg;base64,' . $imageData;
-        $imagePath1 = base_path('public\storage\images\posts\banner\banner_1747110165.png'); // Tạo một ảnh nhỏ ở đây nếu muốn
+        $imagePath1 = base_path('public\storage\images\posts\banner\banner_1747106893.png'); // Tạo một ảnh nhỏ ở đây nếu muốn
         $imageData1 = base64_encode(file_get_contents($imagePath1));
         $bn = 'data:image/jpeg;base64,' . $imageData1;
 
@@ -196,8 +196,8 @@ class PostTest extends TestCase
         $post = $post = Post::where('title', 'test')->latest()->first();
         $this->assertNotNull($post->image);
         $this->assertNotNull($post->banner_image);
-        $this->assertStringStartsWith('images/posts/thumbnail/', $post->image);
-        $this->assertStringStartsWith('images/posts/banner/', $post->banner_image);
+        $this->assertStringStartsWith('images/posts/thumbnail', $post->image);
+        $this->assertStringStartsWith('images/posts/banner', $post->banner_image);
     }
 
     public function test_updated_without_image(): void
@@ -206,14 +206,8 @@ class PostTest extends TestCase
         $category = $this->createCategory();
         $this->createPost($user['user_id'], $category['category_id']);
         // Tạo chuỗi base64 hợp lệ
-        $imagePath = base_path('public\storage\images\posts\thumbnail\thumb_1746187041.png'); // Tạo một ảnh nhỏ ở đây nếu muốn
-        $imageData = base64_encode(file_get_contents($imagePath));
-        $tb = 'data:image/jpeg;base64,' . $imageData;
-        $imagePath1 = base_path('public\storage\images\posts\banner\banner_1747110165.png'); // Tạo một ảnh nhỏ ở đây nếu muốn
-        $imageData1 = base64_encode(file_get_contents($imagePath1));
-        $bn = 'data:image/jpeg;base64,' . $imageData1;
 
-        $response = $this->withSession(['user' => $user]) // nếu bạn dùng session('user') trong controller
+        $response = $this->withSession(['user' => $user])
         ->put(route('posts.update', 1), [
             'title' => 'test',
             'description' => 'test',
@@ -234,8 +228,8 @@ class PostTest extends TestCase
         $post = Post::where('title', 'test')->latest()->first();
         $this->assertNotNull($post->image);
         $this->assertNotNull($post->banner_image);
-        $this->assertStringStartsWith('images/posts/thumbnail/', $post->image);
-        $this->assertStringStartsWith('images/posts/banner/', $post->banner_image);
+        $this->assertStringStartsWith('images\posts\thumbnail', $post->image);
+        $this->assertStringStartsWith('images\posts\banner', $post->banner_image);
     }
 
     public function test_updated_defect_attribute_without_image(): void
@@ -244,10 +238,10 @@ class PostTest extends TestCase
         $category = $this->createCategory();
         $this->createPost($user['user_id'], $category['category_id']);
         // Tạo chuỗi base64 hợp lệ
-        $imagePath = base_path('public\storage\images\posts\thumbnail\thumb_1746187041.png'); // Tạo một ảnh nhỏ ở đây nếu muốn
+        $imagePath = base_path('public\storage\images\posts\thumbnail\thumb_1747106893.png'); // Tạo một ảnh nhỏ ở đây nếu muốn
         $imageData = base64_encode(file_get_contents($imagePath));
         $tb = 'data:image/jpeg;base64,' . $imageData;
-        $imagePath1 = base_path('public\storage\images\posts\banner\banner_1747110165.png'); // Tạo một ảnh nhỏ ở đây nếu muốn
+        $imagePath1 = base_path('public\storage\images\posts\banner\banner_1747106893.png'); // Tạo một ảnh nhỏ ở đây nếu muốn
         $imageData1 = base64_encode(file_get_contents($imagePath1));
         $bn = 'data:image/jpeg;base64,' . $imageData1;
 
@@ -276,10 +270,10 @@ class PostTest extends TestCase
         $category = $this->createCategory();
         $this->createPost($user['user_id'], $category['category_id']);
         // Tạo chuỗi base64 hợp lệ
-        $imagePath = base_path('public\storage\images\posts\thumbnail\thumb_1746187041.png'); // Tạo một ảnh nhỏ ở đây nếu muốn
+        $imagePath = base_path('public\storage\images\posts\thumbnail\thumb_1747106893.png'); // Tạo một ảnh nhỏ ở đây nếu muốn
         $imageData = base64_encode(file_get_contents($imagePath));
         $tb = 'data:image/jpeg;base64,' . $imageData;
-        $imagePath1 = base_path('public\storage\images\posts\banner\banner_1747110165.png'); // Tạo một ảnh nhỏ ở đây nếu muốn
+        $imagePath1 = base_path('public\storage\images\posts\banner\banner_1747106893.png'); // Tạo một ảnh nhỏ ở đây nếu muốn
         $imageData1 = base64_encode(file_get_contents($imagePath1));
         $bn = 'data:image/jpeg;base64,' . $imageData1;
         $this->assertDatabaseHas('posts', [

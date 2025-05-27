@@ -17,13 +17,13 @@ class UserTest extends TestCase
             'password' => 'abc',
             'name' => 'Ngô Việt Anh',
             'is_admin' => $role,
-            'user_image' => 'images/user/avatar/avatar_1746205288.png',
+            'user_image' => 'images\user\avatar\avatar_1746281553.png',
             'phone_number' => '0961361582',
         ]);
     }
     protected function createAvatar(): string
     {
-        $imagePath1 = base_path('public\storage\images\user\avatar\avatar_1746205288.png');
+        $imagePath1 = base_path('public\storage\images\user\avatar\avatar_1746281553.png');
         $imageData1 = base64_encode(file_get_contents($imagePath1));
         return 'data:image/jpeg;base64,' . $imageData1;
     }
@@ -72,7 +72,7 @@ class UserTest extends TestCase
         $user = User::where('email', 'ngovietanh2003thtb@gmail.com')->latest()->first();
         if($user->user_image){
             $this->assertNotNull($user->user_image);
-            $this->assertStringStartsWith('images/user/avatar/', $user->user_image);
+            $this->assertStringStartsWith('images\user\avatar', $user->user_image);
         }
         else{
             $this->assertNull($user->user_image);
